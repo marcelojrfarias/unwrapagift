@@ -11,6 +11,20 @@ Linha fina, uniforme, sem preenchimento, muita área vazia. É esse traço que q
 
 ---
 
+## 0. O que pedir ao gerador (leia antes)
+
+**Peça traço preto sobre fundo BRANCO PURO (#FFFFFF).** O Gemini não entrega
+transparência e devolve `.jpg` — tudo bem. O tratamento converte a escuridão de
+cada pixel em opacidade, então branco vira transparente sozinho. Uma cor chapada
+(verde, magenta) daria mais trabalho e sujaria a borda das linhas.
+
+O que o JPG estraga é outra coisa: a compressão deixa um chuvisco cinza em volta
+do traço. `tools/preparar-imagem.py` corta tudo acima de 236 de luminância, então
+esse ruído não vira véu na tela. Só não peça fundo cinza, creme ou com sombra —
+aí o corte come o desenho junto.
+
+---
+
 ## 1. Decisão técnica: gere em PRETO, não em verde
 
 Pode parecer errado, já que o site é verde-sálvia. É de propósito.
@@ -157,13 +171,21 @@ has a closely shaved head and broad shoulders; two have long wavy hair. No faces
 ### Revelação — O presente
 
 ```
-SCENE: A compact countertop dishwasher, front three-quarter view, door slightly ajar, with a
-single pull-out rack visible inside holding three plates on edge. Clean rectangular form, simple
-control line across the top front. The machine sits on a single horizontal counter line. Nothing
-else in the frame — no kitchen, no cabinets, no background.
+SCENE: A compact countertop dishwasher, front three-quarter view, resting on a single horizontal
+counter line. The door is slightly ajar and through the opening one pull-out rack is visible,
+holding three plates on edge. Squat, compact proportions: it sits on top of a counter, it is NOT
+a tall built-in under-counter unit. A thin control strip across the top front, drawn as one plain
+empty line with no markings, no buttons and no writing on it. Nothing else in the frame: no
+kitchen, no cabinets, no floor, no objects around it.
 ```
 
 Sem logo, sem marca, sem nada que remeta a vitrine de loja.
+
+**Referência:** anexe a foto do aparelho **fechado**. O erro mais provável do modelo é desenhar
+uma lava-louças de embutir, alta; a foto fechada mostra a proporção compacta de bancada, que é o
+que mais importa acertar. A foto com a porta aberta ajuda no interior, se der para anexar as duas.
+Cuidado: as fotos têm a marca escrita no painel, e o modelo tende a copiar — daí o `no writing`
+no prompt.
 
 ---
 
@@ -171,10 +193,10 @@ Sem logo, sem marca, sem nada que remeta a vitrine de loja.
 
 | Item | Valor |
 |---|---|
-| Formato | PNG com canal alfa (transparência real) |
+| Formato | PNG ou JPG, tanto faz — o tratamento resolve |
 | Dimensão | ~1100px no lado maior; **não precisa ser quadrada** — o site usa a proporção real |
 | Traço | Preto puro (`#000000`), espessura uniforme |
-| Fundo | Totalmente transparente |
+| Fundo | Branco puro (#FFFFFF), chapado, sem sombra nem gradiente |
 | Margem | Nada encosta na borda — deixe ~15% de respiro em volta |
 | Peso | Até ~200 KB por arquivo (é linha, comprime muito) |
 
