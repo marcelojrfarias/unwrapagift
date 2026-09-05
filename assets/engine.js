@@ -22,8 +22,15 @@
 
   var CIRCUMFERENCE = 245;          /* 2πr, r=39 — igual ao stroke-dasharray do CSS */
 
+  /* Entre uma etapa e outra a tela não troca na hora: pede para soltarem,
+     deixa a folha florescer no progresso e só então avança. Sem isso, o dedo
+     dos dois fica cobrindo o texto que acabou de entrar. */
+  var TRANSITION_MIN = 1000;        /* piso: tempo da animação de saída */
+  var TRANSITION_MAX = 2800;        /* teto: se não soltarem, vai assim mesmo */
+
   var idx      = -1;
   var hold     = null;
+  var waiting  = null;              /* callback esperando os dedos saírem */
   var artState = {};                /* src -> true (existe) | false (não existe) */
 
   var supportsMask = !!(global.CSS && CSS.supports && (
@@ -64,26 +71,38 @@
     return '<div data-art="' + src + '" data-delay="' + delay + '"></div>';
   }
 
-  function padsBlock() {
+  /* Impressão digital: arcos concêntricos, mesmo traço fino do resto do site. */
+  var FINGERPRINT =
+    '<svg class="pad__print" viewBox="0 0 32 36" aria-hidden="true">' +
+      '<path d="M3.6 30.2V25.6a12.4 13.4 0 0 1 24.8 0v4.6"/>' +
+      '<path d="M7.2 32.2V26a8.8 10.2 0 0 1 17.6 0v6.2"/>' +
+      '<path d="M10.8 33.8V26.4a5.2 7 0 0 1 10.4 0v7.4"/>' +
+      '<path d="M14.4 34.6V27a1.6 3.6 0 0 1 3.2 0v7.6"/>' +
+    '</svg>';
+
+  function padsBlock(label, delay) {
     var people = GIFT.recipients;
 
     var pads = people.map(function (person, i) {
-      return '<button class="pad" type="button" data-pad="' + i + '" ' +
-                     'aria-label="Segurar: ' + person.name + '">' +
-        '<svg viewBox="0 0 84 84" aria-hidden="true">' +
-          '<circle class="ring" cx="42" cy="42" r="39"/>' +
-          '<circle class="fill" cx="42" cy="42" r="39"/>' +
-        '</svg>' +
-        '<span class="pad__core">' + person.short + '</span>' +
-      '</button>';
+      return '<div class="pad-slot">' +
+        '<button class="pad" type="button" data-pad="' + i + '" ' +
+                'aria-label="Segurar: ' + person.name + '">' +
+          '<svg class="pad__ring" viewBox="0 0 84 84" aria-hidden="true">' +
+            '<circle class="ring" cx="42" cy="42" r="39"/>' +
+            '<circle class="fill" cx="42" cy="42" r="39"/>' +
+          '</svg>' +
+          FINGERPRINT +
+        '</button>' +
+        '<span class="pad__name">' + (person.short || person.name) + '</span>' +
+      '</div>';
     }).join('');
 
     var note = people.length > 1
       ? 'Os dois ao mesmo tempo. Encostem e segurem.'
       : 'Encoste e segure.';
 
-    return '<div class="cta rise d4">' +
-             '<p class="cta__label">' + GIFT.steps[idx].cta + '</p>' +
+    return '<div class="cta rise ' + delay + '">' +
+             '<p class="cta__label">' + label + '</p>' +
              '<div class="pads">' + pads + '</div>' +
              '<p class="note">' + note + '</p>' +
            '</div>';
@@ -96,9 +115,7 @@
              '<h1 class="rise d1">' + c.title + '</h1>' +
              '<div class="hair rise d2"></div>' +
              '<p class="desc rise d2">' + c.desc + '</p>' +
-             '<div class="cta rise d3">' +
-               '<button class="link" type="button" data-advance>' + c.cta + '</button>' +
-             '</div>';
+             padsBlock(c.cta, 'd3');
     }
 
     if (onStep()) {
@@ -106,7 +123,7 @@
       return '<h2 class="rise d1">' + s.title + '</h2>' +
              (s.desc ? '<p class="desc rise d2">' + s.desc + '</p>' : '') +
              artSlot(s.img, 'd3') +
-             padsBlock();
+             padsBlock(s.cta, 'd4');
     }
 
     var r = GIFT.reveal;
@@ -148,8 +165,9 @@
 
   function render() {
     if (hold) { hold.destroy(); hold = null; }
+    waiting = null;
 
-    card.classList.remove('is-entering');
+    card.classList.remove('is-entering', 'is-leaving');
     card.classList.toggle('is-reveal', onReveal());
     card.innerHTML = screen();
     void card.offsetWidth;                     /* reinicia as animações */
@@ -158,10 +176,7 @@
     syncChrome();
     loadArt();
 
-    var advance = card.querySelector('[data-advance]');
-    if (advance) advance.addEventListener('click', function () { go(idx + 1); });
-
-    if (onStep()) mountHold();
+    if (idx < lastStep()) mountHold();      /* capa e etapas; a revelação não tem pads */
     if (onReveal()) global.setTimeout(celebrate, 600);
 
     global.scrollTo(0, 0);
@@ -193,9 +208,48 @@
       },
       onComplete: function () {
         if (global.navigator.vibrate) global.navigator.vibrate(18);
-        global.setTimeout(function () { go(idx + 1); }, 320);
+        beginTransition();
+      },
+      onRelease: function (stillHeld) {
+        if (stillHeld === 0 && waiting) { var done = waiting; waiting = null; done(); }
       }
     });
+  }
+
+  /* Sai da tela atual, pede para soltarem, avança quando soltarem — ou no teto. */
+  function beginTransition() {
+    var target  = idx + 1;
+    var startedAt = performance.now();
+    var settled = false;
+
+    card.classList.add('is-leaving');
+
+    var note = card.querySelector('.note');
+    if (note) {
+      note.textContent = GIFT.recipients.length > 1 ? 'Podem soltar.' : 'Pode soltar.';
+    }
+
+    /* a folha desta etapa floresce enquanto a tela sai */
+    var leaf = idx >= 0 ? progress.children[idx] : null;
+    if (leaf) leaf.classList.add('is-done', 'is-blooming');
+
+    function finish() {
+      if (settled) return;
+      settled = true;
+      global.clearTimeout(ceiling);
+      waiting = null;
+      go(target);
+    }
+
+    var ceiling = global.setTimeout(finish, TRANSITION_MAX);
+
+    waiting = function () {
+      var elapsed = performance.now() - startedAt;
+      global.setTimeout(finish, Math.max(0, TRANSITION_MIN - elapsed));
+    };
+
+    /* se já estavam com os dedos fora (teclado, por exemplo), não espera */
+    if (hold && hold.heldCount() === 0) waiting();
   }
 
   function announce() {

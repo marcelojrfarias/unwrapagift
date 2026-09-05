@@ -6,7 +6,12 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* mata o zoom de duplo-toque do iOS sem matar o zoom de pinça,
+     que a acessibilidade exige (user-scalable=no mataria os dois) */
+  touch-action: manipulation;
+}
 
 body {
   min-height: 100dvh;
@@ -210,7 +215,23 @@ h2 {
   display: flex;
   gap: 26px;
   justify-content: center;
+  align-items: flex-start;
 }
+
+.pad-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}
+
+.pad__name {
+  font-size: 12px;
+  letter-spacing: .07em;
+  color: var(--muted);
+  transition: color .3s ease;
+}
+.pad-slot:has(.pad.is-held) .pad__name { color: var(--gold-text); }
 
 .pad {
   position: relative;
@@ -225,11 +246,24 @@ h2 {
   -webkit-touch-callout: none;      /* iOS não abre menu no long-press */
   -webkit-tap-highlight-color: transparent;
 }
-.pad svg {
+.pad__ring {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   transform: rotate(-90deg);        /* preenchimento começa no topo */
 }
+
+.pad__print {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 42px; height: 47px;
+  transform: translate(-50%, -50%);
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  transition: stroke .3s ease;
+}
+.pad.is-held .pad__print { stroke: var(--gold); }
 .pad .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
 .pad .fill {
   fill: none;
@@ -239,15 +273,6 @@ h2 {
   stroke-dasharray: 245;
   stroke-dashoffset: 245;
 }
-.pad__core {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-size: 10.5px;
-  letter-spacing: .2em;
-  color: var(--muted);
-  transition: color .3s ease;
-}
-.pad.is-held .pad__core { color: var(--gold); }
 .pad:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; border-radius: 50%; }
 
 .note {
@@ -337,8 +362,26 @@ h2 {
 
 @keyframes rise { to { opacity: 1; transform: none; } }
 
+/* Sai de cena. O atraso deixa o "Podem soltar." legível antes do fade. */
+.card.is-leaving { animation: leave .55s cubic-bezier(.4, 0, 1, 1) .45s forwards; }
+@keyframes leave { to { opacity: 0; transform: translateY(-12px); } }
+
+.card.is-leaving .note {
+  color: var(--gold-text);
+  transition: color .25s ease;
+}
+
+.leaf.is-blooming { animation: bloom .9s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes bloom {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; }
   .is-entering .rise { animation: none; }
-  .leaf path { transition: none; }
+  .leaf .blade, .leaf .vein { transition: none; }
+  .card.is-leaving { animation: none; opacity: 0; }
+  .leaf.is-blooming { animation: none; }
 }

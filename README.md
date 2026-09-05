@@ -19,7 +19,11 @@ python3 -m http.server 8000
 1. Copie `gifts/bruna-alexandre.js` para `gifts/seu-presente.js` e troque o conteúdo.
 2. Se quiser outra paleta, copie `assets/theme-botanico.css` para `assets/theme-<nome>.css`
    e mexa só nas variáveis.
-3. Aponte os dois no `index.html`.
+3. Crie `seu-presente/index.html` (copie de `bruna-e-alexandre/`) apontando para os dois.
+
+Cada presente vive na própria pasta e ganha a própria URL:
+`.../unwrapagift/bruna-e-alexandre/`. A raiz é uma página neutra — não revela
+nenhum presente para quem cair nela por acaso.
 
 O motor se adapta ao que estiver no arquivo: uma pessoa em `recipients` mostra um círculo
 e a instrução vai para o singular; duas mostram dois e a trava simultânea. O indicador de
@@ -42,7 +46,8 @@ Campos de texto aceitam HTML simples (`<br>`, `<em>`).
 ## Estrutura
 
 ```
-index.html
+index.html                página neutra do projeto
+bruna-e-alexandre/        um presente = uma pasta = uma URL
 assets/
   base.css              layout, tipografia, movimento
   theme-botanico.css    só variáveis de cor e fonte

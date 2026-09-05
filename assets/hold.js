@@ -19,6 +19,7 @@
     var holdMs     = options.holdMs || 2200;
     var onProgress = options.onProgress || function () {};
     var onComplete = options.onComplete || function () {};
+    var onRelease  = options.onRelease  || function () {};
 
     var reduced = global.matchMedia
       && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -40,10 +41,22 @@
       return true;
     }
 
+    function heldCount() {
+      var n = 0;
+      for (var i = 0; i < held.length; i++) if (held[i]) n++;
+      return n;
+    }
+
     function setHeld(i, value) {
-      if (finished || held[i] === value) return;
+      if (held[i] === value) return;
       held[i] = value;
       pads[i].classList.toggle('is-held', value);
+
+      /* Depois de completo o grupo não recomeça, mas continua contando quem
+         ainda está na tela: a transição espera os dedos saírem antes de
+         trocar de etapa. */
+      if (finished) { onRelease(heldCount()); return; }
+
       if (everyHeld()) start(); else stop();
     }
 
@@ -113,6 +126,7 @@
     });
 
     return {
+      heldCount: heldCount,
       destroy: function () {
         stop();
         finished = true;
