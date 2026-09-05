@@ -5,6 +5,7 @@
 
 :root {
   --paper:     #FBFAF7;  /* fundo, o material principal */
+  --paper-0:   rgba(251, 250, 247, 0);  /* o mesmo papel, transparente */
   --ink:       #26372B;  /* verde muito escuro, texto principal */
   --muted:     #6B7263;  /* texto secundário — 4.78:1 sobre o papel */
   --rule:      #E7E3D9;  /* linhas e estados inativos */

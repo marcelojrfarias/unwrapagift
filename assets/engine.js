@@ -97,6 +97,7 @@
 
     var pads = people.map(function (person, i) {
       return '<div class="pad-slot">' +
+        '<span class="pad__name">' + (person.short || person.name) + '</span>' +
         '<button class="pad" type="button" data-pad="' + i + '" ' +
                 'aria-label="Segurar: ' + person.name + '">' +
           '<svg class="pad__ring" viewBox="0 0 84 84" aria-hidden="true">' +
@@ -105,7 +106,6 @@
           '</svg>' +
           FINGERPRINT +
         '</button>' +
-        '<span class="pad__name">' + (person.short || person.name) + '</span>' +
       '</div>';
     }).join('');
 
@@ -185,6 +185,7 @@
     void card.offsetWidth;                     /* reinicia as animações */
     card.classList.add('is-entering');
 
+    document.body.classList.toggle('has-controls', idx < lastStep());
     syncChrome();
     loadArt();
 
