@@ -270,11 +270,11 @@
     return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
   }
 
-  /* O mesmo raminho do topo, maior, com a folha recém-concluída enchendo. */
+  /* O mesmo raminho do topo, maior, com a folha recém-concluída enchendo.
+     Saindo da capa nada foi vencido ainda: aparece vazio, como empty state.
+     (Esconder não funcionaria: o display:flex do elemento vence o atributo
+     hidden e sobrava a haste solta na tela.) */
   function buildWaveSprig(doneIdx) {
-    if (doneIdx < 0) { wavesSprig.innerHTML = ''; wavesSprig.hidden = true; return; }
-    wavesSprig.hidden = false;
-
     var tag = 'w' + Date.now().toString(36);
     var html = '';
     for (var i = 0; i < GIFT.steps.length; i++) {
@@ -294,6 +294,8 @@
     wavesSprig.innerHTML = html;
 
     /* no frame seguinte, para a transição do preenchimento acontecer */
+    if (doneIdx < 0) return;                /* capa: raminho vazio, nada a encher */
+
     var target = wavesSprig.querySelector('[data-i="' + doneIdx + '"]');
     if (target) requestAnimationFrame(function () {
       requestAnimationFrame(function () { target.classList.add('is-filling'); });
