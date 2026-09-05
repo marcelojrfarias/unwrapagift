@@ -4,4 +4,7 @@
 _referencias/
 handoff/
 
+# screenshots de teste do Playwright
+shots*/
+
 .DS_Store
