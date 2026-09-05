@@ -160,9 +160,10 @@
       img.onload = function () {
         artState[src] = true;
         if (!slot.parentNode) return;
+        var ratio = img.naturalHeight ? (img.naturalWidth / img.naturalHeight) : 1;
         slot.className = 'art rise ' + slot.getAttribute('data-delay');
         slot.innerHTML = supportsMask
-          ? '<div class="art__mask" style="--art-src:url(' + src + ')"></div>'
+          ? '<div class="art__mask" style="--art-src:url(' + src + ');--art-ratio:' + ratio + '"></div>'
           : '<img src="' + src + '" alt="">';
       };
       img.onerror = function () {

@@ -87,7 +87,7 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 Monte cada um assim: **`[BLOCO DE ESTILO]` + `SCENE:` + `[NEGATIVO]`**
 
-### Etapa 1 — Tempo de qualidade
+### Etapa 1 — Tempo de qualidade  ✅ pronta
 
 ```
 SCENE: A couple sitting side by side on the sand at the beach, seen from behind and slightly to
@@ -172,7 +172,7 @@ Sem logo, sem marca, sem nada que remeta a vitrine de loja.
 | Item | Valor |
 |---|---|
 | Formato | PNG com canal alfa (transparência real) |
-| Dimensão | 1400 × 1400 px, quadrado |
+| Dimensão | ~1100px no lado maior; **não precisa ser quadrada** — o site usa a proporção real |
 | Traço | Preto puro (`#000000`), espessura uniforme |
 | Fundo | Totalmente transparente |
 | Margem | Nada encosta na borda — deixe ~15% de respiro em volta |
@@ -190,18 +190,21 @@ não abre buraco. Então pode publicar antes e ir colocando as imagens depois, u
 
 ---
 
-## 7. Limpeza (se vier com fundo branco)
+## 7. Preparar o arquivo
 
-Muitos geradores devolvem fundo branco mesmo quando você pede transparente. Com ImageMagick:
+Não jogue a imagem direto em `img/`. Passe por:
 
 ```sh
-magick etapa-1.png -fuzz 12% -transparent white \
-       -colorspace Gray -level 0%,60% \
-       -resize 1400x1400 img/etapa-1.png
+python3 tools/preparar-imagem.py ~/Downloads/imagem.png img/etapa-2.png
 ```
 
-O `-level` empurra os cinzas do antialiasing para preto, que é o que a máscara do CSS precisa.
-Se o traço sair fantasmagórico no site, foi aqui que faltou contraste — aumente para `0%,45%`.
+O script converte o traço para preto puro sobre transparente (a opacidade vem da escuridão
+do pixel, o que preserva o antialiasing das linhas finas), **apara as bordas vazias** e reduz
+para 1100px.
+
+O corte importa mais do que parece: a imagem da etapa 1 veio 704×1527 e virou 696×431 depois
+de aparar — quase dois terços do arquivo eram espaço vazio. Sem isso a ilustração apareceria
+minúscula no meio de um bloco em branco.
 
 ---
 

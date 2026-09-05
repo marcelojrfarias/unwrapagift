@@ -45,8 +45,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(92px + env(safe-area-inset-top)) 28px
-           calc(48px + env(safe-area-inset-bottom));
+  padding: calc(clamp(58px, 11svh, 92px) + env(safe-area-inset-top)) 28px
+           calc(clamp(22px, 5svh, 48px) + env(safe-area-inset-bottom));
   position: relative;
   z-index: 2;                        /* acima dos confetes */
 }
@@ -181,7 +181,7 @@ h2 {
   line-height: 1.72;
   color: var(--muted);
   max-width: 33ch;
-  margin: 20px auto 0;
+  margin: clamp(12px, 2.4svh, 20px) auto 0;
 }
 
 .hair {
@@ -195,13 +195,17 @@ h2 {
 /* O PNG é traço preto sobre transparente; a máscara pinta a cor do tema.
    Ver docs/prompts-imagens.md. */
 .art {
-  margin: 32px auto 0;
-  width: 100%;
-  max-width: 250px;
+  margin: clamp(12px, 2.6svh, 30px) auto 0;
+  display: flex;
+  justify-content: center;
 }
+/* O slot toma a proporção real da imagem: as ilustrações não são quadradas e
+   um slot fixo deixaria um vão embaixo. */
+/* A ilustração cede espaço em tela baixa: sem isso os círculos e a instrução
+   saíam da dobra e era preciso rolar para achar o que fazer. */
 .art__mask {
-  width: 100%;
-  aspect-ratio: 1;
+  width: min(270px, 100%, calc(14.5svh * var(--art-ratio, 1)));
+  aspect-ratio: var(--art-ratio, 1);
   background-color: var(--art-ink);
   -webkit-mask: var(--art-src) center / contain no-repeat;
           mask: var(--art-src) center / contain no-repeat;
@@ -210,12 +214,12 @@ h2 {
 
 /* ---------- os círculos de segurar ---------- */
 
-.cta { margin-top: 38px; }
+.cta { margin-top: clamp(16px, 4svh, 38px); }
 
 .cta__label {
   font-size: 13px;
   letter-spacing: .06em;
-  margin-bottom: 22px;
+  margin-bottom: clamp(12px, 2.6svh, 22px);
 }
 
 .pads {
@@ -229,7 +233,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 13px;
+  gap: clamp(9px, 1.6svh, 13px);
 }
 
 .pad__name {
@@ -309,7 +313,7 @@ h2 {
   font-size: 12px;
   line-height: 1.6;
   color: var(--muted);
-  margin-top: 20px;
+  margin-top: clamp(10px, 2.4svh, 20px);
   transition: color .3s ease;
 }
 
