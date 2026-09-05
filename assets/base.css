@@ -47,13 +47,13 @@ body {
   justify-content: center;
   padding: calc(clamp(58px, 11svh, 92px) + env(safe-area-inset-top)) 28px
            calc(clamp(22px, 5svh, 48px) + env(safe-area-inset-bottom));
+  position: relative;
+  z-index: 2;                        /* acima dos confetes, em toda tela */
 }
 
 /* Com os controles ancorados no rodapé, o conteúdo precisa parar antes deles. */
 body.has-controls .stage {
   padding-bottom: calc(var(--controls-h) + env(safe-area-inset-bottom));
-  position: relative;
-  z-index: 2;                        /* acima dos confetes */
 }
 
 .card {
@@ -547,6 +547,12 @@ h2 {
 .d2 { animation-delay: .50s; }
 .d3 { animation-delay: 1.00s; }
 .d4 { animation-delay: 1.60s; }
+
+/* A revelação não tem controles no rodapé e carrega menos texto: a ilustração
+   do presente pode ocupar bem mais que a das etapas. */
+.is-reveal .art__mask {
+  width: min(300px, 100%, calc(26svh * var(--art-ratio, 1)));
+}
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }

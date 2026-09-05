@@ -168,7 +168,7 @@ each other's shoulders, looking away from the viewer. Varied heights and builds.
 has a closely shaved head and broad shoulders; two have long wavy hair. No faces visible.
 ```
 
-### Revelação — O presente
+### Revelação — O presente  ✅ pronta
 
 ```
 SCENE: A compact countertop dishwasher, front three-quarter view, resting on a single horizontal
@@ -219,6 +219,12 @@ Não jogue a imagem direto em `img/`. Passe por:
 ```sh
 python3 tools/preparar-imagem.py ~/Downloads/imagem.png img/etapa-2.png
 ```
+
+Se uma linha de chão ou de horizonte atravessar a imagem de ponta a ponta, acrescente
+`--focar`. Sem ele, aparar só o vazio não resolve: a proporção fica larguíssima e o assunto
+encolhe. Foi o caso do presente — a linha do balcão deixava a proporção em 2.41 e a máquina
+saía com 232px de largura na tela; com `--focar`, a proporção caiu para 1.29 e ela passou
+a ocupar 223px de largura por 173 de altura.
 
 O script converte o traço para preto puro sobre transparente (a opacidade vem da escuridão
 do pixel, o que preserva o antialiasing das linhas finas), **apara as bordas vazias** e reduz
