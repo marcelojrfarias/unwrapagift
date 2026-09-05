@@ -16,8 +16,10 @@
   var GIFT = global.GIFT;
 
   var card      = document.getElementById('card');
-  var waves     = document.getElementById('waves');
-  var wavesNote = document.getElementById('wavesNote');
+  var waves       = document.getElementById('waves');
+  var wavesStatus = document.getElementById('wavesStatus');
+  var wavesSprig  = document.getElementById('wavesSprig');
+  var wavesNote   = document.getElementById('wavesNote');
   var progress  = document.getElementById('progress');
   var backBtn   = document.getElementById('back');
   var announcer = document.getElementById('announcer');
@@ -27,6 +29,8 @@
   /* Entre uma etapa e outra a tela não troca na hora: pede para soltarem,
      deixa a folha florescer no progresso e só então avança. Sem isso, o dedo
      dos dois fica cobrindo o texto que acabou de entrar. */
+  var LEAF = 'M7 1.2C9.5 4.4 9.5 9.6 7 12.8 4.5 9.6 4.5 4.4 7 1.2Z';
+
   var CONFIRM_MS = 340;             /* beat com o disco cheio antes da onda partir */
   var WAVE_MS    = 680;             /* cada onda, do centro do círculo até o canto */
   var WAVE_GAP   = 170;             /* atraso entre as duas: separa as frentes */
@@ -59,7 +63,7 @@
         '<button class="leaf" type="button" data-i="' + i + '" disabled ' +
                 'aria-label="Voltar para a etapa ' + (i + 1) + '">' +
           '<svg viewBox="0 0 14 14" aria-hidden="true">' +
-            '<path class="blade" d="M7 1.2C9.5 4.4 9.5 9.6 7 12.8 4.5 9.6 4.5 4.4 7 1.2Z"/>' +
+            '<path class="blade" d="' + LEAF + '"/>' +
             '<path class="vein" d="M7 2.4V11.6"/>' +
           '</svg>' +
         '</button>';
@@ -266,6 +270,36 @@
     return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
   }
 
+  /* O mesmo raminho do topo, maior, com a folha recém-concluída enchendo. */
+  function buildWaveSprig(doneIdx) {
+    if (doneIdx < 0) { wavesSprig.innerHTML = ''; wavesSprig.hidden = true; return; }
+    wavesSprig.hidden = false;
+
+    var tag = 'w' + Date.now().toString(36);
+    var html = '';
+    for (var i = 0; i < GIFT.steps.length; i++) {
+      var id = tag + i;
+      html +=
+        '<span class="wleaf' + (i < doneIdx ? ' is-done' : '') + '" data-i="' + i + '">' +
+          '<svg viewBox="0 0 14 14" aria-hidden="true">' +
+            '<clipPath id="' + id + '">' +
+              '<rect class="wfill" x="-2" y="0" width="18" height="14"/>' +
+            '</clipPath>' +
+            '<path class="wblade" d="' + LEAF + '"/>' +
+            '<path class="wblade-full" d="' + LEAF + '" clip-path="url(#' + id + ')"/>' +
+            '<path class="wvein" d="M7 2.4V11.6"/>' +
+          '</svg>' +
+        '</span>';
+    }
+    wavesSprig.innerHTML = html;
+
+    /* no frame seguinte, para a transição do preenchimento acontecer */
+    var target = wavesSprig.querySelector('[data-i="' + doneIdx + '"]');
+    if (target) requestAnimationFrame(function () {
+      requestAnimationFrame(function () { target.classList.add('is-filling'); });
+    });
+  }
+
   function themeColor(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   }
@@ -305,12 +339,13 @@
       /* O rótulo diz o que está acontecendo. Ninguém segura um botão enquanto
          lê que algo está em andamento — não precisa mandar soltar. */
       wavesNote.textContent = GIFT.unwrappingLabel || 'Desembrulhando…';
-      wavesNote.classList.remove('is-off');
-      wavesNote.classList.add('is-on');
+      buildWaveSprig(idx);            /* idx é a etapa que acabou de ser vencida */
+      wavesStatus.classList.remove('is-off');
+      wavesStatus.classList.add('is-on');
 
       awaitRelease(GOLD_MIN, GOLD_MAX, function () {
-        wavesNote.classList.remove('is-on');
-        wavesNote.classList.add('is-off');
+        wavesStatus.classList.remove('is-on');
+        wavesStatus.classList.add('is-off');
         var falling = spawnWaves(origins, themeColor('--paper-wave'), true);
 
         /* O conteúdo já começa a entrar por baixo do papel: quando o overlay

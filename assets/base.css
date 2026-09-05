@@ -132,7 +132,7 @@ body {
 .back {
   position: fixed;
   top: calc(20px + env(safe-area-inset-top));
-  right: 18px;
+  left: 18px;                        /* seta aponta pra esquerda: mora na esquerda */
   z-index: 21;
   width: 40px; height: 40px;
   display: grid; place-items: center;
@@ -420,11 +420,58 @@ h2 {
 
 /* Diz o que está acontecendo, não o que fazer: quem lê que algo está em
    andamento solta o botão sozinho. */
-.waves__note {
+.waves__status {
   position: fixed;
   left: 0; right: 0;
   top: 50%;
   z-index: 41;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  pointer-events: none;
+}
+
+/* O raminho aparece maior aqui do que no topo: nesta tela ele é o assunto, e
+   a 14px o preenchimento gradual não se leria. */
+.waves__sprig {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  opacity: 0;
+}
+.waves__sprig::before {
+  content: "";
+  position: absolute;
+  left: -16px; right: -16px; top: 50%;
+  height: 1px;
+  background: rgba(251, 250, 247, .3);
+}
+.wleaf { position: relative; z-index: 1; display: grid; place-items: center; }
+.wleaf svg { width: 24px; height: 24px; display: block; overflow: visible; }
+.wleaf:nth-child(odd)  svg { transform: rotate(-16deg); }
+.wleaf:nth-child(even) svg { transform: rotate(16deg); }
+
+.wblade, .wvein { fill: none; stroke: rgba(251, 250, 247, .5); stroke-width: 1; }
+.wvein { stroke-width: .75; }
+.wleaf.is-done .wblade,
+.wleaf.is-done .wvein { stroke: var(--paper); }
+.wleaf.is-done .wblade { fill: var(--paper); }
+
+/* a folha da etapa recém-concluída enche de baixo para cima */
+.wblade-full { fill: var(--paper); }
+.wfill { transform: translateY(14px); }              /* fora da folha: vazia */
+.wleaf.is-done .wfill { transform: none; }
+.wleaf.is-filling .wfill {
+  transform: none;
+  transition: transform .85s cubic-bezier(.3, .7, .4, 1);
+}
+.wleaf.is-filling .wblade,
+.wleaf.is-filling .wvein { stroke: var(--paper); transition: stroke .5s ease; }
+
+.waves__note {
   text-align: center;
   color: var(--paper);
   /* 23px mantém o contraste de 3.68:1 sobre o dourado dentro da regra de
@@ -433,21 +480,19 @@ h2 {
   font-size: 23px;
   letter-spacing: .05em;
   opacity: 0;
-  transform: translateY(-50%);
-  pointer-events: none;
 }
-.waves__note.is-on {
-  animation: noteIn .26s ease forwards,
-             noteBreathe 2.4s ease-in-out .26s infinite;
-}
-.waves__note.is-off {
+.is-on .waves__sprig { animation: noteIn .3s ease forwards; }
+.is-on .waves__note  { animation: noteIn .26s ease .1s forwards,
+                                  noteBreathe 2.4s ease-in-out .36s infinite; }
+.is-off .waves__sprig,
+.is-off .waves__note {
   animation: none;
   opacity: 0;
   transition: opacity .22s ease;
 }
 @keyframes noteIn {
-  from { opacity: 0; transform: translateY(-50%) scale(.97); }
-  to   { opacity: 1; transform: translateY(-50%) scale(1); }
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
 }
 @keyframes noteBreathe {
   0%, 100% { opacity: 1; }
@@ -501,5 +546,6 @@ h2 {
   .card.is-leaving { animation: none; opacity: 0; }
   .leaf.is-blooming { animation: none; }
   .pad.is-sealed { animation: none; }
-  .waves__note.is-on { animation: none; opacity: 1; }
+  .is-on .waves__note, .is-on .waves__sprig { animation: none; opacity: 1; }
+  .wleaf.is-filling .wfill { transition: none; transform: translateY(0); }
 }
