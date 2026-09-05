@@ -17,8 +17,8 @@ window.GIFT = {
   cover: {
     eyebrow: 'Um presente de casamento para',
     title:   'Bruna<br>e Alexandre',
-    desc:    'De Ari, Giu, Natanzinho e Marcelo.<br>Para abrir juntos.',
-    cta:     'Começar a desembrulhar'
+    desc:    'De Ari, Giu, Natanzinho e Marcelo.',
+    cta:     'Começar a desembrulhar juntos'
   },
 
   steps: [

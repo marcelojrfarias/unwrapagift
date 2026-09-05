@@ -98,7 +98,7 @@
     }).join('');
 
     var note = people.length > 1
-      ? 'Os dois ao mesmo tempo. Encostem e segurem.'
+      ? 'Encostem e segurem ao mesmo tempo.'
       : 'Encoste e segure.';
 
     return '<div class="cta rise ' + delay + '">' +

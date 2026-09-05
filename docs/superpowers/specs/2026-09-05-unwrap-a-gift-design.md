@@ -136,8 +136,8 @@ papel off-white, `aria-live` anunciando a troca de etapa.
 **Capa**
 - eyebrow: `UM PRESENTE DE CASAMENTO PARA`
 - título: `Bruna e Alexandre`
-- desc: `De Ari, Giu, Natanzinho e Marcelo.` / `Para abrir juntos.`
-- cta: `Começar a desembrulhar`
+- desc: `De Ari, Giu, Natanzinho e Marcelo.`
+- cta: `Começar a desembrulhar juntos`
 
 **Etapas** (título / descrição / rótulo do CTA)
 
@@ -164,7 +164,7 @@ papel off-white, `aria-live` anunciando a troca de etapa.
 - signoff: `Com carinho,`
 - assinatura: `Ari, Giu, Natanzinho e Marcelo`
 
-Instrução no rodapé dos pads: `Os dois ao mesmo tempo. Encostem e segurem.`
+Instrução no rodapé dos pads: `Encostem e segurem ao mesmo tempo.`
 (Com um destinatário: `Encoste e segure.`)
 
 ## 12. Publicação
