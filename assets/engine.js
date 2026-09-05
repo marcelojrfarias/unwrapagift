@@ -17,6 +17,7 @@
 
   var card      = document.getElementById('card');
   var waves     = document.getElementById('waves');
+  var wavesNote = document.getElementById('wavesNote');
   var progress  = document.getElementById('progress');
   var backBtn   = document.getElementById('back');
   var announcer = document.getElementById('announcer');
@@ -29,7 +30,7 @@
   var CONFIRM_MS = 340;             /* beat com o disco cheio antes da onda partir */
   var WAVE_MS    = 680;             /* cada onda, do centro do círculo até o canto */
   var WAVE_GAP   = 170;             /* atraso entre as duas: separa as frentes */
-  var GOLD_MIN   = 260;             /* piso com a tela dourada */
+  var GOLD_MIN   = 1000;            /* piso com a tela dourada: tempo de ler o rótulo */
   var GOLD_MAX   = 2000;            /* teto: se não soltarem, segue mesmo assim */
   var HANDOFF_MS = 380;             /* quanto o conteúdo novo entra antes de o papel sair */
   var PLAIN_MIN  = 1000;            /* mesma espera, quando o movimento é reduzido */
@@ -265,17 +266,6 @@
     return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
   }
 
-  function spawnRings(origins) {
-    return origins.map(function (o) {
-      var el = document.createElement('div');
-      el.className = 'wave-ring';
-      el.style.left = (o.x - 42) + 'px';
-      el.style.top  = (o.y - 42) + 'px';
-      waves.appendChild(el);
-      return el;
-    });
-  }
-
   function themeColor(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   }
@@ -312,12 +302,15 @@
     var rising = spawnWaves(origins, themeColor('--gold-wave'), false);
 
     global.setTimeout(function () {
-      /* A tela segue dourada enquanto houver dedo nela. Soltar é o que traz a
-         onda de volta — os anéis respirando dizem isso sem texto. */
-      var rings = spawnRings(origins);
+      /* O rótulo diz o que está acontecendo. Ninguém segura um botão enquanto
+         lê que algo está em andamento — não precisa mandar soltar. */
+      wavesNote.textContent = GIFT.unwrappingLabel || 'Desembrulhando…';
+      wavesNote.classList.remove('is-off');
+      wavesNote.classList.add('is-on');
 
       awaitRelease(GOLD_MIN, GOLD_MAX, function () {
-        rings.forEach(function (r) { r.classList.add('is-out'); });
+        wavesNote.classList.remove('is-on');
+        wavesNote.classList.add('is-off');
         var falling = spawnWaves(origins, themeColor('--paper-wave'), true);
 
         /* O conteúdo já começa a entrar por baixo do papel: quando o overlay

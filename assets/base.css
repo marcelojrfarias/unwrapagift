@@ -418,30 +418,40 @@ h2 {
 }
 .wave--plain { mix-blend-mode: screen; }
 
-/* Os círculos continuam ali durante a tela dourada, respirando: é o que ancora
-   os dedos e mostra que a tela está viva, esperando. */
-.wave-ring {
-  position: absolute;
-  width: 84px; height: 84px;
-  border-radius: 50%;
-  border: 1px solid rgba(251, 250, 247, .6);
+/* Diz o que está acontecendo, não o que fazer: quem lê que algo está em
+   andamento solta o botão sozinho. */
+.waves__note {
+  position: fixed;
+  left: 0; right: 0;
+  top: 50%;
+  z-index: 41;
+  text-align: center;
+  color: var(--paper);
+  /* 23px mantém o contraste de 3.68:1 sobre o dourado dentro da regra de
+     texto grande (>=18.66px pede 3:1) */
+  font-family: var(--font-display);
+  font-size: 23px;
+  letter-spacing: .05em;
   opacity: 0;
-  animation: ringIn .45s ease .12s both,
-             ringBreathe 2.8s ease-in-out .57s infinite;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
-.wave-ring.is-out {
+.waves__note.is-on {
+  animation: noteIn .26s ease forwards,
+             noteBreathe 2.4s ease-in-out .26s infinite;
+}
+.waves__note.is-off {
   animation: none;
   opacity: 0;
-  transform: scale(1.3);
-  transition: opacity .3s ease, transform .45s cubic-bezier(.22,.61,.36,1);
+  transition: opacity .22s ease;
 }
-@keyframes ringIn {
-  from { opacity: 0;  transform: scale(.86); }
-  to   { opacity: .8; transform: scale(1); }
+@keyframes noteIn {
+  from { opacity: 0; transform: translateY(-50%) scale(.97); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1); }
 }
-@keyframes ringBreathe {
-  0%, 100% { opacity: .8;  transform: scale(1); }
-  50%      { opacity: .42; transform: scale(1.06); }
+@keyframes noteBreathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .74; }
 }
 
 /* Um beat de confirmação: o disco cheio dá um pulso antes de a onda cobrir
@@ -490,6 +500,6 @@ h2 {
   .leaf .blade, .leaf .vein { transition: none; }
   .card.is-leaving { animation: none; opacity: 0; }
   .leaf.is-blooming { animation: none; }
-  .wave-ring { animation: none; opacity: .8; }
   .pad.is-sealed { animation: none; }
+  .waves__note.is-on { animation: none; opacity: 1; }
 }
