@@ -404,7 +404,11 @@ h2 {
 
 /* Cada onda é um dourado claro; onde as duas se cruzam, o multiply devolve
    exatamente --gold-deep. Duas frentes visíveis, e a tela termina na cor cheia
-   porque no fim as duas cobrem tudo. */
+   porque no fim as duas cobrem tudo.
+
+   A volta é o espelho: screen no lugar de multiply. Transparência resolveria,
+   mas geraria um bege lavado que não pertence à paleta — o screen mantém as
+   duas frentes em tons da família do papel e fecha exatamente em --paper. */
 .wave {
   position: absolute;
   border-radius: 50%;
@@ -412,7 +416,7 @@ h2 {
   will-change: transform;
   mix-blend-mode: multiply;
 }
-.wave--plain { mix-blend-mode: normal; }
+.wave--plain { mix-blend-mode: screen; }
 
 /* Os círculos continuam ali durante a tela dourada, respirando: é o que ancora
    os dedos e mostra que a tela está viva, esperando. */

@@ -31,6 +31,7 @@
   var WAVE_GAP   = 170;             /* atraso entre as duas: separa as frentes */
   var GOLD_MIN   = 260;             /* piso com a tela dourada */
   var GOLD_MAX   = 2000;            /* teto: se não soltarem, segue mesmo assim */
+  var HANDOFF_MS = 380;             /* quanto o conteúdo novo entra antes de o papel sair */
   var PLAIN_MIN  = 1000;            /* mesma espera, quando o movimento é reduzido */
   var PLAIN_MAX  = 2800;
 
@@ -255,18 +256,11 @@
         'background:' + color;
       waves.appendChild(el);
 
-      /* Na volta as ondas entram translúcidas — dá para ver as duas frentes — e
-         solidificam no fim, senão sobraria um véu dourado sobre a etapa nova. */
-      var frames = plain
-        ? [{ transform: 'scale(0)', opacity: .62 },
-           { transform: 'scale(.8)', opacity: .62, offset: .7 },
-           { transform: 'scale(1)', opacity: 1 }]
-        : [{ transform: 'scale(0)' }, { transform: 'scale(1)' }];
-
-      el.animate(frames, {
-        duration: WAVE_MS, delay: i * WAVE_GAP,
-        easing: 'cubic-bezier(.25,.6,.3,1)', fill: 'forwards'
-      });
+      el.animate(
+        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
+        { duration: WAVE_MS, delay: i * WAVE_GAP,
+          easing: 'cubic-bezier(.25,.6,.3,1)', fill: 'forwards' }
+      );
     });
     return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
   }
@@ -324,11 +318,15 @@
 
       awaitRelease(GOLD_MIN, GOLD_MAX, function () {
         rings.forEach(function (r) { r.classList.add('is-out'); });
-        var falling = spawnWaves(origins, themeColor('--paper'), true);
+        var falling = spawnWaves(origins, themeColor('--paper-wave'), true);
+
+        /* O conteúdo já começa a entrar por baixo do papel: quando o overlay
+           sai, ele aparece em movimento, sem o beat de tela vazia. */
+        global.setTimeout(function () { go(target); },
+                          Math.max(0, falling - HANDOFF_MS));
 
         global.setTimeout(function () {
-          go(target);            /* troca o conteúdo sob o papel */
-          waves.innerHTML = '';  /* papel sobre papel: sem piscada */
+          waves.innerHTML = '';
           waves.hidden = true;
         }, falling);
       });
