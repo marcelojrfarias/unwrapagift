@@ -23,6 +23,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+
+  /* Segurar o dedo perto de um texto fazia o iOS selecionar a palavra e abrir a
+     lupa por cima do círculo. Ninguém precisa copiar texto daqui, então a
+     seleção sai do site inteiro — não só dos círculos. */
+  -webkit-user-select: none;
+          user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .sr-only {
@@ -303,6 +310,15 @@ h2 {
   line-height: 1.6;
   color: var(--muted);
   margin-top: 20px;
+  transition: color .3s ease;
+}
+
+/* Basta um dedo na tela para a instrução ganhar peso: é ela que explica por que
+   nada aconteceu ainda. Segue destacada com os dois segurando, e volta ao normal
+   quando não há mais ninguém encostado. */
+.cta:has(.pad.is-held) .note {
+  font-weight: 400;
+  color: var(--ink);
 }
 
 /* ---------- botão de texto ---------- */
@@ -369,6 +385,27 @@ h2 {
   z-index: 1;
 }
 
+/* ---------- ondas de transição ----------
+   Duas ondas douradas saem do centro de cada círculo e cobrem a tela; depois
+   duas ondas de papel saem do mesmo ponto e a devolvem ao normal. A troca de
+   conteúdo acontece com o papel já cobrindo tudo — overlay e fundo são a mesma
+   cor, então a substituição não aparece.
+
+   A tela fica dourada enquanto houver dedo nela e a onda volta quando soltam:
+   é isso que dispensa qualquer instrução escrita pedindo para soltar. */
+
+.waves {
+  position: fixed; inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+.wave {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  will-change: transform;
+}
 /* ---------- entradas ---------- */
 
 .rise { opacity: 0; transform: translateY(14px); }

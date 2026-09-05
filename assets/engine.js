@@ -16,6 +16,7 @@
   var GIFT = global.GIFT;
 
   var card      = document.getElementById('card');
+  var waves     = document.getElementById('waves');
   var progress  = document.getElementById('progress');
   var backBtn   = document.getElementById('back');
   var announcer = document.getElementById('announcer');
@@ -25,8 +26,12 @@
   /* Entre uma etapa e outra a tela não troca na hora: pede para soltarem,
      deixa a folha florescer no progresso e só então avança. Sem isso, o dedo
      dos dois fica cobrindo o texto que acabou de entrar. */
-  var TRANSITION_MIN = 1000;        /* piso: tempo da animação de saída */
-  var TRANSITION_MAX = 2800;        /* teto: se não soltarem, vai assim mesmo */
+  var WAVE_MS    = 620;             /* cada onda, do centro do círculo até o canto */
+  var WAVE_GAP   = 90;              /* atraso entre as duas: duas pedras, não uma */
+  var GOLD_MIN   = 320;             /* piso com a tela dourada */
+  var GOLD_MAX   = 2000;            /* teto: se não soltarem, segue mesmo assim */
+  var PLAIN_MIN  = 1000;            /* mesma espera, quando o movimento é reduzido */
+  var PLAIN_MAX  = 2800;
 
   var idx      = -1;
   var hold     = null;
@@ -216,40 +221,93 @@
     });
   }
 
-  /* Sai da tela atual, pede para soltarem, avança quando soltarem — ou no teto. */
-  function beginTransition() {
-    var target  = idx + 1;
-    var startedAt = performance.now();
+  function reducedMotion() {
+    return !!(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  /* Distância do ponto até o canto mais longe: o raio que a onda tem que cobrir. */
+  function reach(x, y) {
+    var w = global.innerWidth, h = global.innerHeight;
+    return Math.max(
+      Math.hypot(x, y),         Math.hypot(w - x, y),
+      Math.hypot(x, h - y),     Math.hypot(w - x, h - y)
+    );
+  }
+
+  function padCenters() {
+    return Array.prototype.map.call(card.querySelectorAll('.pad'), function (pad) {
+      var r = pad.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+  }
+
+  function spawnWaves(origins, color) {
+    origins.forEach(function (o, i) {
+      var r  = reach(o.x, o.y);
+      var el = document.createElement('div');
+      el.className = 'wave';
+      el.style.cssText =
+        'left:'   + (o.x - r) + 'px;top:' + (o.y - r) + 'px;' +
+        'width:'  + (2 * r)   + 'px;height:' + (2 * r) + 'px;' +
+        'background:' + color;
+      waves.appendChild(el);
+      el.animate(
+        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
+        { duration: WAVE_MS, delay: i * WAVE_GAP,
+          easing: 'cubic-bezier(.25,.6,.3,1)', fill: 'forwards' }
+      );
+    });
+    return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
+  }
+
+  function themeColor(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  /* Espera os dedos saírem, entre um piso e um teto, e então segue. */
+  function awaitRelease(min, max, then) {
     var settled = false;
-
-    card.classList.add('is-leaving');
-
-    var note = card.querySelector('.note');
-    if (note) {
-      note.textContent = GIFT.recipients.length > 1 ? 'Podem soltar.' : 'Pode soltar.';
-    }
-
-    /* a folha desta etapa floresce enquanto a tela sai */
-    var leaf = idx >= 0 ? progress.children[idx] : null;
-    if (leaf) leaf.classList.add('is-done', 'is-blooming');
-
     function finish() {
       if (settled) return;
       settled = true;
       global.clearTimeout(ceiling);
       waiting = null;
-      go(target);
+      then();
+    }
+    var ceiling = global.setTimeout(finish, max);
+    waiting = function () { global.setTimeout(finish, min); };
+    if (hold && hold.heldCount() === 0) waiting();
+  }
+
+  /* A onda dourada vaza dos círculos e toma a tela; a de papel devolve o fundo.
+     O conteúdo novo entra com o papel já cobrindo tudo, então a troca não aparece. */
+  function beginTransition() {
+    var target  = idx + 1;
+    var origins = padCenters();
+
+    if (reducedMotion() || !origins.length || !waves.animate && !Element.prototype.animate) {
+      card.classList.add('is-leaving');
+      awaitRelease(PLAIN_MIN, PLAIN_MAX, function () { go(target); });
+      return;
     }
 
-    var ceiling = global.setTimeout(finish, TRANSITION_MAX);
+    waves.hidden = false;
+    waves.innerHTML = '';
+    var rising = spawnWaves(origins, themeColor('--gold-deep'));
 
-    waiting = function () {
-      var elapsed = performance.now() - startedAt;
-      global.setTimeout(finish, Math.max(0, TRANSITION_MIN - elapsed));
-    };
+    global.setTimeout(function () {
+      /* A tela segue dourada enquanto houver dedo nela. Soltar é o que traz a
+         onda de volta — nenhum texto precisa dizer isso. */
+      awaitRelease(GOLD_MIN, GOLD_MAX, function () {
+        var falling = spawnWaves(origins, themeColor('--paper'));
 
-    /* se já estavam com os dedos fora (teclado, por exemplo), não espera */
-    if (hold && hold.heldCount() === 0) waiting();
+        global.setTimeout(function () {
+          go(target);            /* troca o conteúdo sob o papel */
+          waves.innerHTML = '';  /* papel sobre papel: sem piscada */
+          waves.hidden = true;
+        }, falling);
+      });
+    }, rising);
   }
 
   function announce() {
