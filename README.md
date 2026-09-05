@@ -35,13 +35,18 @@ window.GIFT = {
   recipients: [{ name: 'Bruna', short: 'bruna' }],  // 1 ou 2
   senders: ['...'],
   holdMs: 2200,                                     // tempo de segurar
-  cover:  { eyebrow, title, desc, cta },
+  cover:  { eyebrow, title, desc, cta },            // cta = texto acima dos círculos
   steps:  [ { title, desc?, img?, cta } ],          // quantas quiser
   reveal: { kind, name, img?, msg, signoff, signature }
 };
 ```
 
 Campos de texto aceitam HTML simples (`<br>`, `<em>`).
+
+O `cta` é o único texto em volta dos círculos. Na capa ele ensina a mecânica
+("Pressionem ao mesmo tempo para desembrulhar"); nas etapas vira a escada que
+cria antecipação ("Tem mais", "Quase lá", "Falta pouco", "Abrir"). Como o texto
+vem daqui, é ele que decide singular ou plural conforme quem recebe.
 
 ## Estrutura
 

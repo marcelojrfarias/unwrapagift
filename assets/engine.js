@@ -109,14 +109,13 @@
       '</div>';
     }).join('');
 
-    var note = people.length > 1
-      ? 'Encostem e segurem ao mesmo tempo.'
-      : 'Encoste e segure.';
-
+    /* Um texto só, acima dos círculos. Na capa ele ensina a mecânica; nas
+       etapas vira a escada de CTAs, que é o que cria a antecipação. O texto
+       vem sempre do arquivo de conteúdo, então quem escreve o presente ajusta
+       singular e plural conforme o número de destinatários. */
     return '<div class="cta rise ' + delay + '">' +
-             '<p class="cta__label">' + label + '</p>' +
+             '<p class="note">' + label + '</p>' +
              '<div class="pads">' + pads + '</div>' +
-             '<p class="note">' + note + '</p>' +
            '</div>';
   }
 

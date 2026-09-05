@@ -216,12 +216,6 @@ h2 {
 
 .cta { margin-top: clamp(16px, 4svh, 38px); }
 
-.cta__label {
-  font-size: 13px;
-  letter-spacing: .06em;
-  margin-bottom: clamp(12px, 2.6svh, 22px);
-}
-
 .pads {
   display: flex;
   gap: 26px;
@@ -310,10 +304,12 @@ h2 {
 .pad:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; border-radius: 50%; }
 
 .note {
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.55;
   color: var(--muted);
-  margin-top: clamp(10px, 2.4svh, 20px);
+  margin: 0 auto clamp(14px, 2.6svh, 22px);
+  max-width: 24ch;              /* duas linhas equilibradas em tela estreita */
+  text-wrap: balance;
   transition: color .3s ease;
 }
 
