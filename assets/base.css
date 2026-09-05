@@ -246,6 +246,21 @@ h2 {
   -webkit-touch-callout: none;      /* iOS não abre menu no long-press */
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Segurar inverte o círculo: o disco fica dourado e tudo que estava dourado
+   passa a papel. O feedback sai de baixo do dedo e vai para a borda, que é a
+   única parte que a pessoa continua enxergando enquanto segura. */
+.pad::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--gold-deep);
+  opacity: 0;
+  transform: scale(.88);
+  transition: opacity .22s ease, transform .28s cubic-bezier(.34, 1.4, .64, 1);
+}
+.pad.is-held::before { opacity: 1; transform: scale(1); }
 .pad__ring {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -263,8 +278,14 @@ h2 {
   stroke-linecap: round;
   transition: stroke .3s ease;
 }
-.pad.is-held .pad__print { stroke: var(--gold); }
-.pad .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
+.pad.is-held .pad__print { stroke: var(--paper); }
+.pad .ring {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+  transition: stroke .22s ease;
+}
+.pad.is-held .ring { stroke: rgba(251, 250, 247, .38); }
 .pad .fill {
   fill: none;
   stroke: var(--gold);
@@ -272,7 +293,9 @@ h2 {
   stroke-linecap: round;
   stroke-dasharray: 245;
   stroke-dashoffset: 245;
+  transition: stroke .22s ease;
 }
+.pad.is-held .fill { stroke: var(--paper); }
 .pad:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; border-radius: 50%; }
 
 .note {
