@@ -1,0 +1,344 @@
+/* ============================================================
+   unwrapagift — layout, tipografia e movimento.
+   Nenhuma cor literal aqui: tudo vem do arquivo de tema.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* ---------- palco ---------- */
+
+.stage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(92px + env(safe-area-inset-top)) 28px
+           calc(48px + env(safe-area-inset-bottom));
+  position: relative;
+  z-index: 2;                        /* acima dos confetes */
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+/* ---------- progresso: o raminho ---------- */
+
+.chrome {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  padding-top: calc(26px + env(safe-area-inset-top));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.progress {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity .6s ease;
+  pointer-events: none;
+}
+.progress.is-visible { opacity: 1; pointer-events: auto; }
+
+/* a haste, atrás das folhas */
+.progress::before {
+  content: "";
+  position: absolute;
+  left: -14px; right: -14px; top: 50%;
+  height: 1px;
+  background: var(--rule);
+}
+
+.leaf {
+  position: relative;
+  z-index: 1;
+  width: 20px; height: 20px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: var(--paper);      /* recorta a haste atrás da folha */
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+/* área de toque confortável sem engordar o desenho */
+.leaf::after { content: ""; position: absolute; inset: -12px; }
+
+.leaf svg { width: 14px; height: 14px; display: block; overflow: visible; }
+.leaf .blade {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+  transition: fill .7s ease, stroke .7s ease;
+}
+.leaf .vein {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: .75;
+  transition: stroke .7s ease;
+}
+.leaf:nth-child(odd)  svg { transform: rotate(-16deg); }
+.leaf:nth-child(even) svg { transform: rotate(16deg); }
+
+.leaf.is-current .blade,
+.leaf.is-current .vein  { stroke: var(--sage); }
+.leaf.is-done .blade    { fill: var(--gold-soft); stroke: var(--gold); }
+.leaf.is-done .vein     { stroke: var(--gold); }
+.leaf.is-done           { cursor: pointer; }
+.leaf:focus-visible   { outline: 1px solid var(--gold); outline-offset: 5px; }
+
+/* ---------- voltar ---------- */
+
+.back {
+  position: fixed;
+  top: calc(20px + env(safe-area-inset-top));
+  right: 18px;
+  z-index: 21;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: 0; background: none;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.back.is-visible { opacity: .55; pointer-events: auto; }
+.back:hover, .back:focus-visible { opacity: 1; }
+.back:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+
+/* ---------- tipografia ---------- */
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-bottom: 26px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(40px, 11vw, 58px);
+  line-height: 1.14;
+  letter-spacing: .005em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(27px, 7.2vw, 35px);
+  line-height: 1.32;                 /* Cormorant tem acentos altos: ~ e ^ pedem folga */
+  max-width: 19ch;
+  margin: 0 auto;
+}
+
+.desc {
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: var(--muted);
+  max-width: 33ch;
+  margin: 20px auto 0;
+}
+
+.hair {
+  width: 38px; height: 1px;
+  background: var(--gold-soft);
+  margin: 26px auto;
+}
+
+/* ---------- ilustração ---------- */
+
+/* O PNG é traço preto sobre transparente; a máscara pinta a cor do tema.
+   Ver docs/prompts-imagens.md. */
+.art {
+  margin: 32px auto 0;
+  width: 100%;
+  max-width: 250px;
+}
+.art__mask {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--art-ink);
+  -webkit-mask: var(--art-src) center / contain no-repeat;
+          mask: var(--art-src) center / contain no-repeat;
+}
+.art img { width: 100%; height: auto; display: block; opacity: .75; }
+
+/* ---------- os círculos de segurar ---------- */
+
+.cta { margin-top: 38px; }
+
+.cta__label {
+  font-size: 13px;
+  letter-spacing: .06em;
+  margin-bottom: 22px;
+}
+
+.pads {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+}
+
+.pad {
+  position: relative;
+  width: 84px; height: 84px;
+  flex: none;
+  border: 0; padding: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: none;               /* o gesto é nosso, não do scroll */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;      /* iOS não abre menu no long-press */
+  -webkit-tap-highlight-color: transparent;
+}
+.pad svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);        /* preenchimento começa no topo */
+}
+.pad .ring { fill: none; stroke: var(--rule); stroke-width: 1; }
+.pad .fill {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 245;
+  stroke-dashoffset: 245;
+}
+.pad__core {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  color: var(--muted);
+  transition: color .3s ease;
+}
+.pad.is-held .pad__core { color: var(--gold); }
+.pad:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; border-radius: 50%; }
+
+.note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 20px;
+}
+
+/* ---------- botão de texto ---------- */
+
+.link {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: .1em;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--gold-soft);
+  padding: 8px 2px;
+  cursor: pointer;
+  transition: border-color .25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.link:hover, .link:focus-visible { border-color: var(--gold); }
+.link:focus-visible { outline: 1px solid var(--gold); outline-offset: 6px; }
+
+/* ---------- revelação ---------- */
+
+.gift__kind {
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: 10px;
+}
+.gift__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 8.4vw, 42px);
+  line-height: 1.14;
+  letter-spacing: .01em;
+}
+.gift__msg {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 30ch;
+  margin: 24px auto 0;
+}
+.signoff {
+  font-size: 12.5px;
+  letter-spacing: .04em;
+  color: var(--muted);
+  margin-top: 38px;
+}
+.signature {
+  font-family: var(--font-display);
+  font-size: 19px;
+  letter-spacing: .03em;
+  margin-top: 6px;
+}
+
+/* Os confetes caem ATRÁS do texto. Por cima, eles competem com a leitura
+   exatamente na tela que mais precisa ser lida. */
+#confetti {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------- entradas ---------- */
+
+.rise { opacity: 0; transform: translateY(14px); }
+.is-entering .rise { animation: rise .95s cubic-bezier(.22,.61,.36,1) forwards; }
+.d1 { animation-delay: .05s; }
+.d2 { animation-delay: .50s; }
+.d3 { animation-delay: 1.00s; }
+.d4 { animation-delay: 1.60s; }
+
+/* a revelação respira mais fundo que as outras telas */
+.is-reveal .rise { animation-duration: 1.4s; }
+.is-reveal .d2 { animation-delay: .85s; }
+.is-reveal .d3 { animation-delay: 1.5s; }
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { opacity: 1; transform: none; }
+  .is-entering .rise { animation: none; }
+  .leaf path { transition: none; }
+}

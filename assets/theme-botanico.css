@@ -1,0 +1,22 @@
+/* Tema botânico — tirado do save the date deles: papel off-white texturizado,
+   verde-sálvia, um traço de dourado no lugar das flores amarelas.
+
+   Trocar de tema é trocar este arquivo. Nada aqui além de variáveis. */
+
+:root {
+  --paper:     #FBFAF7;  /* fundo, o material principal */
+  --ink:       #26372B;  /* verde muito escuro, texto principal */
+  --muted:     #6B7263;  /* texto secundário — 4.78:1 sobre o papel */
+  --rule:      #E7E3D9;  /* linhas e estados inativos */
+  --sage:      #8A9C7E;  /* verde: estrutura */
+  --gold:      #B08D3F;  /* dourado: progresso e ação, única cor de acento */
+  --gold-soft: #D9C48B;
+  --gold-text: #8A6C26;  /* o mesmo dourado, escuro o bastante para texto — 4.73:1 */
+
+  --art-ink:   var(--sage);  /* cor das ilustrações de traço */
+
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body:    'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  --confetti: #B08D3F, #D9C48B, #8A9C7E, #26372B, #FFFFFF;
+}
