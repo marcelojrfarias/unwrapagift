@@ -26,9 +26,10 @@
   /* Entre uma etapa e outra a tela não troca na hora: pede para soltarem,
      deixa a folha florescer no progresso e só então avança. Sem isso, o dedo
      dos dois fica cobrindo o texto que acabou de entrar. */
-  var WAVE_MS    = 620;             /* cada onda, do centro do círculo até o canto */
-  var WAVE_GAP   = 90;              /* atraso entre as duas: duas pedras, não uma */
-  var GOLD_MIN   = 320;             /* piso com a tela dourada */
+  var CONFIRM_MS = 340;             /* beat com o disco cheio antes da onda partir */
+  var WAVE_MS    = 680;             /* cada onda, do centro do círculo até o canto */
+  var WAVE_GAP   = 170;             /* atraso entre as duas: separa as frentes */
+  var GOLD_MIN   = 260;             /* piso com a tela dourada */
   var GOLD_MAX   = 2000;            /* teto: se não soltarem, segue mesmo assim */
   var PLAIN_MIN  = 1000;            /* mesma espera, quando o movimento é reduzido */
   var PLAIN_MAX  = 2800;
@@ -213,7 +214,9 @@
       },
       onComplete: function () {
         if (global.navigator.vibrate) global.navigator.vibrate(18);
-        beginTransition();
+        /* deixa o disco cheio à mostra por um instante antes de a onda cobrir */
+        pads.forEach(function (p) { p.classList.add('is-sealed'); });
+        global.setTimeout(beginTransition, CONFIRM_MS);
       },
       onRelease: function (stillHeld) {
         if (stillHeld === 0 && waiting) { var done = waiting; waiting = null; done(); }
@@ -241,23 +244,42 @@
     });
   }
 
-  function spawnWaves(origins, color) {
+  function spawnWaves(origins, color, plain) {
     origins.forEach(function (o, i) {
       var r  = reach(o.x, o.y);
       var el = document.createElement('div');
-      el.className = 'wave';
+      el.className = 'wave' + (plain ? ' wave--plain' : '');
       el.style.cssText =
         'left:'   + (o.x - r) + 'px;top:' + (o.y - r) + 'px;' +
         'width:'  + (2 * r)   + 'px;height:' + (2 * r) + 'px;' +
         'background:' + color;
       waves.appendChild(el);
-      el.animate(
-        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
-        { duration: WAVE_MS, delay: i * WAVE_GAP,
-          easing: 'cubic-bezier(.25,.6,.3,1)', fill: 'forwards' }
-      );
+
+      /* Na volta as ondas entram translúcidas — dá para ver as duas frentes — e
+         solidificam no fim, senão sobraria um véu dourado sobre a etapa nova. */
+      var frames = plain
+        ? [{ transform: 'scale(0)', opacity: .62 },
+           { transform: 'scale(.8)', opacity: .62, offset: .7 },
+           { transform: 'scale(1)', opacity: 1 }]
+        : [{ transform: 'scale(0)' }, { transform: 'scale(1)' }];
+
+      el.animate(frames, {
+        duration: WAVE_MS, delay: i * WAVE_GAP,
+        easing: 'cubic-bezier(.25,.6,.3,1)', fill: 'forwards'
+      });
     });
     return WAVE_MS + Math.max(0, origins.length - 1) * WAVE_GAP;
+  }
+
+  function spawnRings(origins) {
+    return origins.map(function (o) {
+      var el = document.createElement('div');
+      el.className = 'wave-ring';
+      el.style.left = (o.x - 42) + 'px';
+      el.style.top  = (o.y - 42) + 'px';
+      waves.appendChild(el);
+      return el;
+    });
   }
 
   function themeColor(name) {
@@ -293,13 +315,16 @@
 
     waves.hidden = false;
     waves.innerHTML = '';
-    var rising = spawnWaves(origins, themeColor('--gold-deep'));
+    var rising = spawnWaves(origins, themeColor('--gold-wave'), false);
 
     global.setTimeout(function () {
       /* A tela segue dourada enquanto houver dedo nela. Soltar é o que traz a
-         onda de volta — nenhum texto precisa dizer isso. */
+         onda de volta — os anéis respirando dizem isso sem texto. */
+      var rings = spawnRings(origins);
+
       awaitRelease(GOLD_MIN, GOLD_MAX, function () {
-        var falling = spawnWaves(origins, themeColor('--paper'));
+        rings.forEach(function (r) { r.classList.add('is-out'); });
+        var falling = spawnWaves(origins, themeColor('--paper'), true);
 
         global.setTimeout(function () {
           go(target);            /* troca o conteúdo sob o papel */

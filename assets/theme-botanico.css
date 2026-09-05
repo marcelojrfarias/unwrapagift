@@ -13,6 +13,7 @@
   --gold-soft: #D9C48B;
   --gold-text: #8A6C26;  /* o mesmo dourado, escuro o bastante para texto — 4.73:1 */
   --gold-deep: #A07D2C;  /* disco preenchido; 3.68:1 com o traço claro por cima */
+  --gold-wave: #CAB26A;  /* onda: multiply de duas destas dá exatamente --gold-deep */
 
   --art-ink:   var(--sage);  /* cor das ilustrações de traço */
 
