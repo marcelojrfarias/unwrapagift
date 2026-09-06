@@ -275,7 +275,7 @@ h2 {
 .pad__name {
   font-size: 12px;
   letter-spacing: .07em;
-  color: var(--muted);
+  color: var(--gold-text);
   transition: color .3s ease;
 }
 .pad-slot:has(.pad.is-held) .pad__name { color: var(--gold-text); }
@@ -320,16 +320,19 @@ h2 {
   width: 42px; height: 47px;
   transform: translate(-50%, -50%);
   fill: none;
-  stroke: var(--rule);
+  stroke: var(--gold-deep);
   stroke-width: 1.3;
   stroke-linecap: round;
   transition: stroke .3s ease;
 }
 .pad.is-held .pad__print { stroke: var(--paper); }
+/* Dourado já em repouso: com o anel em --rule os círculos quase sumiam na
+   página. Usa --gold-deep e não --gold porque o traço claro precisa de 3:1
+   sobre ele quando o disco preenche. */
 .pad .ring {
   fill: none;
-  stroke: var(--rule);
-  stroke-width: 1;
+  stroke: var(--gold-deep);
+  stroke-width: 1.4;
   transition: stroke .22s ease;
 }
 .pad.is-held .ring { stroke: rgba(251, 250, 247, .38); }
@@ -561,6 +564,9 @@ h2 {
 /* A revelação não tem controles no rodapé e carrega menos texto: a ilustração
    do presente pode ocupar bem mais que a das etapas. */
 .is-reveal .art__mask { height: 26svh; }
+
+/* A capa carrega o título grande, então a ilustração cede um pouco. */
+.is-cover .art__mask { height: 16svh; }
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }

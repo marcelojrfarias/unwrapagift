@@ -35,7 +35,7 @@ window.GIFT = {
   recipients: [{ name: 'Bruna', short: 'bruna' }],  // 1 ou 2
   senders: ['...'],
   holdMs: 2200,                                     // tempo de segurar
-  cover:  { eyebrow, title, desc, cta },            // cta = texto acima dos círculos
+  cover:  { eyebrow, title, desc, img?, cta },      // cta = texto acima dos círculos
   steps:  [ { title, desc?, img?, cta } ],          // quantas quiser
   reveal: { kind, name, img?, msg, signoff, signature }
 };

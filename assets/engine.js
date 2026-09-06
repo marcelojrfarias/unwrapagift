@@ -126,7 +126,8 @@
              '<h1 class="rise d1">' + c.title + '</h1>' +
              '<div class="hair rise d2"></div>' +
              '<p class="desc rise d2">' + c.desc + '</p>' +
-             padsBlock(c.cta, 'd3');
+             artSlot(c.img, 'd3') +
+             padsBlock(c.cta, 'd4');
     }
 
     if (onStep()) {
@@ -181,6 +182,7 @@
 
     card.classList.remove('is-entering', 'is-leaving');
     card.classList.toggle('is-reveal', onReveal());
+    card.classList.toggle('is-cover', idx < 0);
     card.innerHTML = screen();
     void card.offsetWidth;                     /* reinicia as animações */
     card.classList.add('is-entering');
