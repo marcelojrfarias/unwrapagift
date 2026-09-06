@@ -112,8 +112,8 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 | Pessoa | Descritor (colar em inglês) | Foto |
 |---|---|---|
-| **Bruna** | `a woman with long dark wavy hair filled in as a solid black shape, falling well past her shoulders, slim build` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
-| **Alexandre (Xand)** | `a tall broad-shouldered man with very short cropped hair drawn as clean outline only (no black shape on his head) and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
+| **Bruna** | `a tall slim woman with long dark wavy hair filled in as a solid black shape, falling well past her shoulders` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
+| **Alexandre (Xand)** | `a tall, lean, slim-built man with very short cropped hair drawn as clean outline only (no black shape on his head) and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt that adds bulk to his slim frame` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
 
 ### Os outros quatro
 
@@ -122,10 +122,10 @@ saem parecidos, a imagem perde o sentido. A divisão abaixo dá a cada um uma si
 
 | Pessoa | Descritor | Marca que o separa |
 |---|---|---|
-| **Ariane** | `a short woman, the shortest of the group, with very long straight dark hair filled solid black, a straight silhouette with no waves` | cabelo liso e reto |
-| **Giu** | `a woman of average height with dark hair tied up in a bun, filled solid black — compact silhouette, no hair on her shoulders` | cabelo preso |
-| **Natan** | `a man of average height and solid build, with short dark curly hair and a short cropped beard, both drawn as outline only, no glasses` | sem óculos, barba em contorno |
-| **Marcelo** | `a tall man with voluminous dark curly hair drawn as outline, a goatee, and thick rectangular glasses drawn in outline` | óculos |
+| **Ariane** | `the shortest of the six, a short slim woman with very long straight dark hair filled solid black — a straight silhouette with no waves` | cabelo liso e reto; a mais baixa |
+| **Giu** | `a woman of average height with a fuller, curvier build, dark hair tied up in a bun filled solid black — compact silhouette, no hair on her shoulders` | cabelo preso |
+| **Natan** | `a man of average height with a stocky, solid, heavier build, short dark curly hair and a short cropped beard, both outline only, no glasses` | sem óculos; o mais encorpado |
+| **Marcelo** | `a tall man of average build, with voluminous dark curly hair in outline, a goatee, and thick rectangular glasses in outline` | óculos |
 
 Duas regras que sustentam isso:
 
@@ -135,8 +135,16 @@ Duas regras que sustentam isso:
   também forem preenchidos, os três homens viram o mesmo homem no tamanho real.
 
 **Alturas** (do mais alto ao mais baixo): Alexandre, Marcelo (quase igual), Natan, Giu e Bruna
-(quase iguais), Ariane (a mais baixa). Numa cena com seis, a linha das cabeças ajuda a leitura
-tanto quanto o cabelo.
+(quase iguais), Ariane (a mais baixa). **Portes:** Alexandre alto e magro, Bruna alta e magra,
+Ariane baixinha e magra, Marcelo alto de porte médio, Natan médio e encorpado, Giu mais encorpada.
+
+Numa cena com seis, altura e porte carregam tanto quanto o cabelo — e o modelo tende a desenhar
+um corpo só e repetir. Daí `everyone the same build` no negativo, junto de `everyone the same
+height`.
+
+> Correção: até a etapa 4 eu descrevi o Alexandre como `broad-shouldered`. Ele é alto e magro — o
+> volume vem da camiseta oversized. As cinco imagens já publicadas seguem válidas porque a
+> silhueta larga vinha da roupa, mas o descritor certo é o desta tabela.
 
 ---
 
