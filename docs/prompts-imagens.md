@@ -40,6 +40,18 @@ Se a sua ferramenta insistir em fundo branco, veja "Limpeza" no fim do documento
 
 ---
 
+## 1b. Cabelo e barba são preenchidos (a exceção que importa)
+
+Linha fina some. Na tela a ilustração aparece com ~126px de altura, e nesse tamanho o cabelo
+ondulado dela desenhado a traço vira uma névoa cinza e a barba dele desaparece — as duas pessoas
+deixam de ser reconhecíveis.
+
+Então há uma exceção deliberada ao "sem preenchimento": **o cabelo dela e a barba dele são massas
+pretas sólidas**. É o que dá presença às figuras no tamanho real, e é o que faz Bruna e Alexandre
+serem eles, e não um casal genérico.
+
+Isso vale para toda cena onde apareçam. O bloco de estilo abaixo já traz a regra.
+
 ## 2. Bloco de estilo — cole em TODOS os prompts
 
 Sempre em inglês: os modelos de imagem entendem melhor e erram menos no traço.
@@ -47,19 +59,22 @@ Este bloco vai **antes** da descrição da cena, sem alterar uma palavra entre u
 
 ```
 STYLE: Single continuous line drawing, minimalist one-line art. Pure black, thin, perfectly
-uniform stroke with no variation in weight, on a fully transparent background. No fill, no
-shading, no hatching, no gradient, no color whatsoever. The confident economy of a fine-line
-sketch on a botanical wedding invitation: calm, elegant, unhurried. Generous empty space — the
-subject occupies the central 70% of a square frame and nothing touches the edges. Faces are
-reduced to essential features only: no rendered eyes, no skin texture, no facial shading.
-People are recognizable by silhouette, hair, build and posture, never by facial detail. Clean
-vector-like curves.
+uniform stroke with no variation in weight, on a plain pure white background (#FFFFFF) — flat
+white, no shadow, no gradient, no texture. Line art only, with TWO exceptions: the woman's hair
+and the man's beard are filled in as solid black shapes, not just outlined. Everything else is
+unfilled line work — no shading, no hatching, no color. The confident economy of a fine-line
+sketch on a botanical wedding invitation: calm, elegant, unhurried. Landscape orientation,
+roughly 3:2. Tight framing: the subject fills most of the frame with only a small margin around
+it. Faces reduced to essential features only: no rendered eyes, no skin texture, no facial
+shading. People are recognizable by silhouette, hair, build and posture, never by facial detail.
+Clean vector-like curves.
 ```
 
 ## 3. Prompt negativo — cole em TODOS
 
 ```
-NEGATIVE: color, fill, shading, gradient, watercolor, painted background, any background,
+NEGATIVE: outlined-only beard, empty beard, outlined-only hair, color, shading, gradient,
+watercolor, painted background, any background,
 frame, border, text, letters, numbers, watermark, signature, drop shadow, 3D render,
 photorealism, crosshatching, thick brush strokes, varying line weight, sketchy double lines,
 detailed facial features, realistic eyes, cartoon expressions, logos, brands.
@@ -87,8 +102,8 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 | Pessoa | Descritor (colar em inglês) | Foto |
 |---|---|---|
-| **Bruna** | `a woman with long dark wavy hair falling well past her shoulders, slim build, small hoop earrings` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
-| **Alexandre (Xand)** | `a tall broad-shouldered man with a closely shaved head and a full dark beard, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
+| **Bruna** | `a woman with long dark wavy hair filled in as a solid black shape, falling well past her shoulders, slim build` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
+| **Alexandre (Xand)** | `a tall broad-shouldered man with a closely shaved head and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
 
 > **Pendência:** a etapa 5 mostra os seis. Ainda não há fotos de **Ari, Giu, Natan e Marcelo**.
 > Coloque uma foto de cada em `bruna-e-alexandre/` e escreva um descritor no mesmo formato acima
@@ -101,7 +116,7 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 Monte cada um assim: **`[BLOCO DE ESTILO]` + `SCENE:` + `[NEGATIVO]`**
 
-### Etapa 1 — Tempo de qualidade  ✅ pronta
+### Etapa 1 — Tempo de qualidade  ⚠️ refazer com cabelo preenchido
 
 ```
 SCENE: A couple sitting side by side on the sand at the beach, seen from behind and slightly to
@@ -114,7 +129,7 @@ oversized t-shirt. Relaxed, unhurried, no faces visible.
 
 De costas resolve dois problemas: não depende de semelhança facial e é mais bonito no traço.
 
-### Etapa 2 — Construir o futuro  ✅ pronta
+### Etapa 2 — Construir o futuro  ⚠️ refazer com cabelo preenchido
 
 ```
 SCENE: A couple standing side by side, seen from behind, holding hands, looking out toward a
@@ -124,7 +139,7 @@ On the right, a tall broad-shouldered man with a closely shaved head and a full 
 wearing an oversized t-shirt. Wide empty space above them. Quiet, forward-looking.
 ```
 
-### Etapa 3 — Uma tarefa a menos para dividir
+### Etapa 3 — Uma tarefa a menos para dividir  ✅ pronta
 
 ```
 SCENE: A couple standing side by side at a kitchen counter, in profile, facing each other
