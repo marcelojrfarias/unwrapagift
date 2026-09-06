@@ -153,14 +153,14 @@ papel off-white, `aria-live` anunciando a troca de etapa.
 4. `É não ter que pôr a mão na água gelada no inverno`
    `Nenhum dos dois vai ter que lavar panela no frio`
    — `Falta pouco`
-5. `E que sobre bastante tempo para a família e os amigos`
+5. `É tempo que sobra para a família e os amigos`
    `Incluindo a gente, óbvio. Já estamos nos convidando pro próximo jantar na casa nova haha`
    — `Abrir`
 
 **Revelação**
 - kind: `O PRESENTE`
 - nome: `Uma lava-louças`
-- msg: `Umas 200 horas por ano de volta, para usar do jeito que quiserem`
+- msg: `E umas 200 horas por ano de volta, para usar do jeito que quiserem`
 - signoff: `Com carinho,`
 - assinatura: `Ari, Giu, Natanzinho e Marcelo`
 

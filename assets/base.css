@@ -212,11 +212,17 @@ h2 {
 /* A ALTURA é que manda, não a largura: assim todas as etapas mostram a
    ilustração na mesma altura e nada abaixo pula de uma tela para a outra.
    A largura sai da proporção de cada desenho. */
-.art__mask {
+.art__mask, .art__slot {
   height: 19svh;
   width: auto;
   max-width: 100%;
   aspect-ratio: var(--art-ratio, 1);
+}
+/* Espaço reservado enquanto a imagem não chega: mesma altura, sem pintura.
+   Sem isso o conteúdo pula quando a ilustração entra. */
+.art__slot { aspect-ratio: 1.4; }
+
+.art__mask {
   background-color: var(--art-ink);
   -webkit-mask: var(--art-src) center / contain no-repeat;
           mask: var(--art-src) center / contain no-repeat;
@@ -224,7 +230,7 @@ h2 {
 .art img { width: 100%; height: auto; display: block; opacity: .75; }
 
 @media (max-height: 620px) {
-  .art__mask { height: 15svh; }
+  .art__mask, .art__slot { height: 15svh; }
 }
 
 /* ---------- os círculos de segurar ---------- */
@@ -563,11 +569,13 @@ h2 {
 
 /* A revelação não tem controles no rodapé e carrega menos texto: a ilustração
    do presente pode ocupar bem mais que a das etapas. */
-.is-reveal .art__mask { height: 26svh; }
+.is-reveal .art__mask, .is-reveal .art__slot { height: 26svh; }
 
 /* A capa carrega o título grande, então a ilustração cede um pouco. */
-.is-cover .art__mask { height: 20svh; }
-@media (max-height: 620px) { .is-cover .art__mask { height: 16svh; } }
+.is-cover .art__mask, .is-cover .art__slot { height: 20svh; }
+@media (max-height: 620px) {
+  .is-cover .art__mask, .is-cover .art__slot { height: 16svh; }
+}
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }

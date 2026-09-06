@@ -48,7 +48,7 @@ window.GIFT = {
       cta:   'Falta pouco'
     },
     {
-      title: 'E que sobre bastante tempo para a família e os amigos',
+      title: 'É tempo que sobra para a família e os amigos',
       desc:  'Incluindo a gente, óbvio. Já estamos nos convidando pro próximo jantar na casa nova haha',
       img:   '../img/etapa-5.png',
       cta:   'Abrir'
@@ -59,7 +59,7 @@ window.GIFT = {
     kind:      'O presente',
     name:      'Uma lava-louças',
     img:       '../img/presente.png',
-    msg:       'Umas 200 horas por ano de volta, para usar do jeito que quiserem',
+    msg:       'E umas 200 horas por ano de volta, para usar do jeito que quiserem',
     signoff:   'Com carinho,',
     signature: 'Ari, Giu, Natanzinho e Marcelo'
   }

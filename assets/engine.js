@@ -44,6 +44,7 @@
   var hold     = null;
   var waiting  = null;              /* callback esperando os dedos saírem */
   var artState = {};                /* src -> true (existe) | false (não existe) */
+  var artRatio = {};                /* src -> proporção real, quando já carregou */
 
   var supportsMask = !!(global.CSS && CSS.supports && (
     CSS.supports('mask-image', 'url(a.png)') ||
@@ -78,9 +79,43 @@
 
   /* ---------- pedaços de tela ---------- */
 
+  function maskHtml(src, ratio) {
+    return supportsMask
+      ? '<div class="art__mask" style="--art-src:url(' + src + ');--art-ratio:' + ratio + '"></div>'
+      : '<img src="' + src + '" alt="">';
+  }
+
   function artSlot(src, delay) {
     if (!src || artState[src] === false) return '';
-    return '<div data-art="' + src + '" data-delay="' + delay + '"></div>';
+
+    /* Já em cache: entra pronta, sem pulo. */
+    if (artState[src] === true && artRatio[src]) {
+      return '<div class="art rise ' + delay + '">' + maskHtml(src, artRatio[src]) + '</div>';
+    }
+
+    /* Ainda carregando: reserva a altura para o texto não se mexer depois. */
+    return '<div class="art rise ' + delay + '" data-art="' + src + '" data-delay="' + delay + '">' +
+             '<div class="art__slot"></div>' +
+           '</div>';
+  }
+
+  /* Todas as ilustrações começam a baixar assim que a capa aparece, então na
+     hora de cada etapa elas já estão em cache. */
+  function preloadArt() {
+    var todas = [];
+    if (GIFT.cover && GIFT.cover.img) todas.push(GIFT.cover.img);
+    GIFT.steps.forEach(function (s) { if (s.img) todas.push(s.img); });
+    if (GIFT.reveal && GIFT.reveal.img) todas.push(GIFT.reveal.img);
+
+    todas.forEach(function (src) {
+      var img = new Image();
+      img.onload = function () {
+        artState[src] = true;
+        artRatio[src] = img.naturalHeight ? img.naturalWidth / img.naturalHeight : 1;
+      };
+      img.onerror = function () { artState[src] = false; };
+      img.src = src;
+    });
   }
 
   /* Impressão digital: arcos concêntricos, mesmo traço fino do resto do site. */
@@ -162,12 +197,9 @@
 
       img.onload = function () {
         artState[src] = true;
+        artRatio[src] = img.naturalHeight ? (img.naturalWidth / img.naturalHeight) : 1;
         if (!slot.parentNode) return;
-        var ratio = img.naturalHeight ? (img.naturalWidth / img.naturalHeight) : 1;
-        slot.className = 'art rise ' + slot.getAttribute('data-delay');
-        slot.innerHTML = supportsMask
-          ? '<div class="art__mask" style="--art-src:url(' + src + ');--art-ratio:' + ratio + '"></div>'
-          : '<img src="' + src + '" alt="">';
+        slot.innerHTML = maskHtml(src, artRatio[src]);
       };
       img.onerror = function () {
         artState[src] = false;
@@ -465,6 +497,7 @@
 
   backBtn.addEventListener('click', function () { go(idx - 1); });
 
+  preloadArt();
   buildProgress();
   render();
 })(window);
