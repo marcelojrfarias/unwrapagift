@@ -126,7 +126,7 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 Monte cada um assim: **`[BLOCO DE ESTILO]` + `SCENE:` + `[NEGATIVO]`**
 
-### Etapa 1 — Tempo de qualidade  ⚠️ refazer: o preenchimento invadiu a cabeça dele
+### Etapa 1 — Tempo de qualidade  ✅ pronta
 
 ```
 SCENE: A couple sitting side by side on the sand at the beach, seen from behind and slightly to
