@@ -52,10 +52,14 @@ serem eles, e não um casal genérico.
 
 Isso vale para toda cena onde apareçam. O bloco de estilo abaixo já traz a regra.
 
-**Cuidado com o efeito colateral:** ao pedir preenchimento, o gerador tende a preencher a cabeça
-dele junto com a barba, e o Xand aparece com cabelo. Ele é de cabeça raspada — a mancha preta é
-só a barba. Por isso os prompts trazem `the top and back of his head are clean outline` e
-`man with hair` no negativo.
+**A cabeça dele fica em contorno, só a barba é preenchida.** O corte real é degradê — escuro no
+topo, raspado nas laterais — mas em traço a 126px essa diferença não se lê, e o que carrega a
+identidade dele é a barba. Padronizar no contorno limpo custa uma imagem em vez de três e não
+perde reconhecimento.
+
+O risco a vigiar é o oposto: ao pedir preenchimento para o cabelo dela, o gerador tende a
+preencher a cabeça dele junto e o Xand aparece de cabeleira. Daí `no black shape on his head` no
+descritor e `man with a full head of hair` no negativo.
 
 ## 2. Bloco de estilo — cole em TODOS os prompts
 
@@ -78,7 +82,8 @@ Clean vector-like curves.
 ## 3. Prompt negativo — cole em TODOS
 
 ```
-NEGATIVE: outlined-only beard, empty beard, outlined-only hair, color, shading, gradient,
+NEGATIVE: outlined-only beard, empty beard, outlined-only hair, man with a full head of hair,
+filled-in hair on the man, color, shading, gradient,
 watercolor, painted background, any background,
 frame, border, text, letters, numbers, watermark, signature, drop shadow, 3D render,
 photorealism, crosshatching, thick brush strokes, varying line weight, sketchy double lines,
@@ -108,7 +113,7 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 | Pessoa | Descritor (colar em inglês) | Foto |
 |---|---|---|
 | **Bruna** | `a woman with long dark wavy hair filled in as a solid black shape, falling well past her shoulders, slim build` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
-| **Alexandre (Xand)** | `a tall broad-shouldered man with a closely shaved head and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
+| **Alexandre (Xand)** | `a tall broad-shouldered man with very short cropped hair drawn as clean outline only (no black shape on his head) and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
 
 > **Pendência:** a etapa 5 mostra os seis. Ainda não há fotos de **Ari, Giu, Natan e Marcelo**.
 > Coloque uma foto de cada em `bruna-e-alexandre/` e escreva um descritor no mesmo formato acima
