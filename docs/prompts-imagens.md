@@ -131,8 +131,10 @@ Duas regras que sustentam isso:
 
 - **Só a Bruna, a Ari e a Giu têm preenchimento de cabelo**, cada uma com um formato diferente:
   ondulado longo, liso longo, preso. Três variações de "cabelo escuro solto" não se distinguiriam.
-- **A única mancha preta masculina é a barba do Xand.** Se a barba do Natan ou os óculos do Marcelo
-  também forem preenchidos, os três homens viram o mesmo homem no tamanho real.
+- **Cada homem tem um tipo de mancha preta diferente, e só um tipo.** Marcelo é o único com o
+  cabelo preenchido; Alexandre o único com a barba preenchida; Natan não tem nenhuma das duas.
+  Massa preta em cima, massa preta embaixo, nenhuma massa — três leituras distintas. Óculos e
+  barba curta ficam sempre em contorno, senão os três viram o mesmo homem no tamanho real.
 
 **Alturas** (do mais alto ao mais baixo): Alexandre, Marcelo (quase igual), Natan, Giu e Bruna
 (quase iguais), Ariane (a mais baixa). **Portes:** Alexandre alto e magro, Bruna alta e magra,
@@ -212,7 +214,7 @@ Três decisões que valeram:
 Ele sozinho não contradiz a etapa 3: lá o casal divide, aqui alguém enfrenta a água gelada
 mesmo dividindo.
 
-### Etapa 5 — Os seis
+### Etapa 5 — Os seis  ✅ pronta
 
 ```
 SCENE: Six friends standing shoulder to shoulder in a single row, facing the viewer, all raising
