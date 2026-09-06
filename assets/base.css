@@ -539,15 +539,18 @@ h2 {
 .is-off .waves__note {
   animation: none;
   opacity: 0;
-  transition: opacity .22s ease;
+  transition: opacity .34s cubic-bezier(.25, .6, .3, 1);
 }
 @keyframes noteIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
+/* Aparece e some de verdade, não só oscila: o texto é a única coisa viva na
+   tela dourada. A saída dura o mesmo que a largada da onda de volta, para o
+   último "some" e o fundo voltando parecerem o mesmo gesto. */
 @keyframes noteBreathe {
   0%, 100% { opacity: 1; }
-  50%      { opacity: .74; }
+  50%      { opacity: .06; }
 }
 
 /* Um beat de confirmação: o disco cheio dá um pulso antes de a onda cobrir
@@ -562,10 +565,14 @@ h2 {
 
 .rise { opacity: 0; transform: translateY(14px); }
 .is-entering .rise { animation: rise .95s cubic-bezier(.22,.61,.36,1) forwards; }
-.d1 { animation-delay: .05s; }
-.d2 { animation-delay: .50s; }
-.d3 { animation-delay: 1.00s; }
-.d4 { animation-delay: 1.60s; }
+
+/* Os atrasos precisam da mesma especificidade da regra acima e vir depois:
+   o atalho "animation:" zera animation-delay, e como ".is-entering .rise"
+   ganha de ".d2", os atrasos eram apagados e tudo entrava junto. */
+.is-entering .d1 { animation-delay: .05s; }
+.is-entering .d2 { animation-delay: .55s; }
+.is-entering .d3 { animation-delay: 1.05s; }
+.is-entering .d4 { animation-delay: 1.70s; }   /* os controles, sempre por último */
 
 /* A revelação não tem controles no rodapé e carrega menos texto: a ilustração
    do presente pode ocupar bem mais que a das etapas. */
