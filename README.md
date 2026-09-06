@@ -37,7 +37,7 @@ window.GIFT = {
   holdMs: 2200,                                     // tempo de segurar
   cover:  { eyebrow, title, desc, img?, cta },      // cta = texto acima dos círculos
   steps:  [ { title, desc?, img?, cta } ],          // quantas quiser
-  reveal: { kind, name, img?, msg, signoff, signature }
+  reveal: { kind, name, img?, msg, signoff, signature, dedication? }
 };
 ```
 

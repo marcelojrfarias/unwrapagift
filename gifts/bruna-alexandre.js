@@ -61,6 +61,7 @@ window.GIFT = {
     img:       '../img/presente.png',
     msg:       'E umas 200 horas por ano de volta, para usar do jeito que quiserem',
     signoff:   'Com carinho,',
-    signature: 'Ari, Giu, Natanzinho e Marcelo'
+    signature: 'Ari, Giu, Natanzinho e Marcelo',
+    dedication: 'para Bruna e Alexandre'
   }
 };

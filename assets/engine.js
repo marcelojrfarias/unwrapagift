@@ -34,8 +34,8 @@
   var CONFIRM_MS = 340;             /* beat com o disco cheio antes da onda partir */
   var WAVE_MS    = 680;             /* cada onda, do centro do círculo até o canto */
   var WAVE_GAP   = 170;             /* atraso entre as duas: separa as frentes */
-  var GOLD_MIN   = 1000;            /* piso com a tela dourada: tempo de ler o rótulo */
-  var GOLD_MAX   = 2000;            /* teto: se não soltarem, segue mesmo assim */
+  var GOLD_MIN   = 3000;            /* piso com a tela dourada: tempo de ler o rótulo */
+  var GOLD_MAX   = 6000;            /* teto: se não soltarem, segue mesmo assim */
   var HANDOFF_MS = 380;             /* quanto o conteúdo novo entra antes de o papel sair */
   var PLAIN_MIN  = 1000;            /* mesma espera, quando o movimento é reduzido */
   var PLAIN_MAX  = 2800;
@@ -182,7 +182,8 @@
            artSlot(r.img, 'd2') +
            '<p class="gift__msg rise d2">' + r.msg + '</p>' +
            (r.signoff ? '<p class="signoff rise d3">' + r.signoff + '</p>' : '') +
-           '<p class="signature rise d3">' + r.signature + '</p>';
+           '<p class="signature rise d3">' + r.signature + '</p>' +
+           (r.dedication ? '<p class="dedication rise d4">' + r.dedication + '</p>' : '');
   }
 
   /* ---------- ilustrações ----------

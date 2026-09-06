@@ -427,6 +427,15 @@ h2 {
   margin-top: 6px;
 }
 
+/* Fecha a carta: quem assina em cima, para quem é embaixo. */
+.dedication {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  letter-spacing: .04em;
+  color: var(--muted);
+  margin-top: 26px;
+}
+
 /* Os confetes caem ATRÁS do texto. Por cima, eles competem com a leitura
    exatamente na tela que mais precisa ser lida. */
 #confetti {
@@ -586,8 +595,9 @@ h2 {
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }
-.is-reveal .d2 { animation-delay: .85s; }
-.is-reveal .d3 { animation-delay: 1.5s; }
+.is-entering.is-reveal .d2 { animation-delay: .85s; }
+.is-entering.is-reveal .d3 { animation-delay: 1.5s; }
+.is-entering.is-reveal .d4 { animation-delay: 2.3s; }
 
 @keyframes rise { to { opacity: 1; transform: none; } }
 
