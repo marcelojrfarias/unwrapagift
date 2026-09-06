@@ -52,6 +52,11 @@ serem eles, e não um casal genérico.
 
 Isso vale para toda cena onde apareçam. O bloco de estilo abaixo já traz a regra.
 
+**Cuidado com o efeito colateral:** ao pedir preenchimento, o gerador tende a preencher a cabeça
+dele junto com a barba, e o Xand aparece com cabelo. Ele é de cabeça raspada — a mancha preta é
+só a barba. Por isso os prompts trazem `the top and back of his head are clean outline` e
+`man with hair` no negativo.
+
 ## 2. Bloco de estilo — cole em TODOS os prompts
 
 Sempre em inglês: os modelos de imagem entendem melhor e erram menos no traço.
@@ -116,7 +121,7 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 
 Monte cada um assim: **`[BLOCO DE ESTILO]` + `SCENE:` + `[NEGATIVO]`**
 
-### Etapa 1 — Tempo de qualidade  ⚠️ refazer com cabelo preenchido
+### Etapa 1 — Tempo de qualidade  ⚠️ refazer: o preenchimento invadiu a cabeça dele
 
 ```
 SCENE: A couple sitting side by side on the sand at the beach, seen from behind and slightly to
@@ -129,7 +134,7 @@ oversized t-shirt. Relaxed, unhurried, no faces visible.
 
 De costas resolve dois problemas: não depende de semelhança facial e é mais bonito no traço.
 
-### Etapa 2 — Construir o futuro  ⚠️ refazer com cabelo preenchido
+### Etapa 2 — Construir o futuro  ✅ pronta
 
 ```
 SCENE: A couple standing side by side, seen from behind, holding hands, looking out toward a
