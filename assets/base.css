@@ -206,16 +206,26 @@ h2 {
 }
 /* O slot toma a proporção real da imagem: as ilustrações não são quadradas e
    um slot fixo deixaria um vão embaixo. */
-/* A ilustração cede espaço em tela baixa: sem isso os círculos e a instrução
-   saíam da dobra e era preciso rolar para achar o que fazer. */
+/* A ilustração cede espaço em tela baixa: sem isso o conteúdo passa a permitir
+   scroll, e rolar aqui só empurra a imagem para trás dos controles — não revela
+   nada. Em tela alta ela pode crescer bem mais. */
+/* A ALTURA é que manda, não a largura: assim todas as etapas mostram a
+   ilustração na mesma altura e nada abaixo pula de uma tela para a outra.
+   A largura sai da proporção de cada desenho. */
 .art__mask {
-  width: min(270px, 100%, calc(14.5svh * var(--art-ratio, 1)));
+  height: 19svh;
+  width: auto;
+  max-width: 100%;
   aspect-ratio: var(--art-ratio, 1);
   background-color: var(--art-ink);
   -webkit-mask: var(--art-src) center / contain no-repeat;
           mask: var(--art-src) center / contain no-repeat;
 }
 .art img { width: 100%; height: auto; display: block; opacity: .75; }
+
+@media (max-height: 620px) {
+  .art__mask { height: 15svh; }
+}
 
 /* ---------- os círculos de segurar ---------- */
 
@@ -550,9 +560,7 @@ h2 {
 
 /* A revelação não tem controles no rodapé e carrega menos texto: a ilustração
    do presente pode ocupar bem mais que a das etapas. */
-.is-reveal .art__mask {
-  width: min(300px, 100%, calc(26svh * var(--art-ratio, 1)));
-}
+.is-reveal .art__mask { height: 26svh; }
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }

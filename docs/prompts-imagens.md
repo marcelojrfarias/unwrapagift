@@ -114,7 +114,7 @@ oversized t-shirt. Relaxed, unhurried, no faces visible.
 
 De costas resolve dois problemas: não depende de semelhança facial e é mais bonito no traço.
 
-### Etapa 2 — Construir o futuro
+### Etapa 2 — Construir o futuro  ✅ pronta
 
 ```
 SCENE: A couple standing side by side, seen from behind, holding hands, looking out toward a
@@ -235,6 +235,20 @@ de aparar — quase dois terços do arquivo eram espaço vazio. Sem isso a ilust
 minúscula no meio de um bloco em branco.
 
 ---
+
+## 7b. Enquadramento: peça sempre paisagem
+
+O site fixa a **altura** das ilustrações e deixa a largura sair da proporção — assim todas as
+etapas mostram a imagem na mesma altura e nada abaixo pula de uma tela para a outra. Para o
+desenho aproveitar bem essa altura, ele precisa ser mais largo que alto.
+
+Duas frases que passaram a valer para todos os prompts:
+
+- `Tight framing: the subject fills most of the frame` — a da praia veio com dois terços de
+  espaço vazio; o corte resolve, mas o enquadramento fica melhor quando não preciso cortar.
+- `Landscape orientation, roughly 3:2` mais `no horizon lines running edge to edge` — uma linha
+  atravessando a imagem inteira empurra a proporção para 2.4 e o assunto encolhe. Foi o que
+  aconteceu com o presente.
 
 ## 8. Checklist antes de fechar
 
