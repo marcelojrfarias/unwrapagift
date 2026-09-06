@@ -162,17 +162,29 @@ line is drawn — no cabinets, no appliances, no kitchen background.
 
 **Atenção:** nada de máquina nesta cena. A revelação depende de o objeto não aparecer antes.
 
-### Etapa 4 — Água gelada em pleno julho
+### Etapa 4 — Água gelada  ✅ pronta
 
 ```
-SCENE: A close-up of a single hand held under a running kitchen faucet. The water is drawn as
-four or five thin falling lines. One pan sits in the sink below. Only the faucet, the hand, the
-water, the pan and a single line for the sink edge — nothing else in the frame. Still, cold,
-slightly resigned.
+SCENE: A man alone at a kitchen sink, seen from a three-quarter front view, washing a single
+cooking pot under a running tap. He is wearing a hooded sweatshirt with the hood up over his head
+and long sleeves pushed up at the wrists, shoulders slightly hunched — he is cold. Water falls
+from the tap as four or five thin lines. He is tall and broad-shouldered, with a FULL SOLID BLACK
+BEARD; his face and hood are clean outline only. Only the pot, the tap, the water and a single
+sink line are drawn, and the sink line stops inside the frame on both sides.
 ```
 
-Única cena sem pessoas inteiras. É proposital: quebra o ritmo antes da última etapa e deixa o
-detalhe concreto falar sozinho.
+Três decisões que valeram:
+
+- **Panela, não prato.** A copy fala em panela, e a etapa 3 já é a dos pratos — sem isso as duas
+  cozinhas virariam a mesma imagem.
+- **Moletom com capuz**, não "roupa de frio" genérica. Precisa ler como frio em meio segundo, sem
+  cor e a 126px. O capuz veio caído nos ombros em vez de na cabeça e ainda assim funcionou: a
+  silhueta encorpada e o cordão bastam para diferenciar da camiseta das outras.
+- `steam` e `hot water` **no negativo**: vapor é o clichê de louça e diria o oposto do que a etapa
+  precisa dizer.
+
+Ele sozinho não contradiz a etapa 3: lá o casal divide, aqui alguém enfrenta a água gelada
+mesmo dividindo.
 
 ### Etapa 5 — Os seis
 
