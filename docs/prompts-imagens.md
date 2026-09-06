@@ -216,8 +216,8 @@ mesmo dividindo.
 
 ```
 SCENE: Six friends standing shoulder to shoulder in a single row, facing the viewer, all raising
-a glass together in a toast. From left to right: [Ariane], [Giu], [Bruna], [Alexandre], [Natan],
-[Marcelo] — use os descritores das tabelas acima, na íntegra. Only the six figures and their
+a glass together in a toast. From left to right: [Marcelo], [Ariane], [Bruna], [Alexandre],
+[Giu], [Natan] — use os descritores das tabelas acima, na íntegra. Only the six figures and their
 raised glasses are drawn. No table, no chairs, no room, no floor line.
 ```
 
@@ -225,13 +225,19 @@ raised glasses are drawn. No table, no chairs, no room, no floor line.
 com isso, mas a 126px de altura seis pessoas mais uma mesa viram uma mancha. Em pé, cada figura
 fica com ~35px de largura e a silhueta do cabelo ainda lê. O brinde sozinho entrega o jantar.
 
-**O casal no centro**, os quatro em volta: a etapa fala de vocês em torno deles, e a composição
-diz isso sem texto. A ordem sugerida também faz a linha das cabeças subir da esquerda para a
-direita, em vez de virar uma fileira plana.
+**A ordem é por casais** — Marcelo e Ari, Bruna e Xand, Giu e Natan — com o casal do presente no
+meio. Ela resolve um risco de leitura de brinde: Marcelo e Natan, os dois mais parecidos entre si
+(cabelo escuro encaracolado, barba curta), ficam nas duas pontas, o mais longe possível um do
+outro. E a linha das cabeças vira um zigue-zague em vez de uma escada.
 
-Acrescente ao negativo desta cena: `glasses on more than one man`, `beards on more than one man`,
-`identical hairstyles`, `everyone the same height`. É o erro típico com seis pessoas — o modelo
-replica um traço marcante em todo mundo e apaga a distinção.
+Acrescente ao negativo desta cena: `glasses on more than one man`, `full beards on more than one
+man`, `identical hairstyles`, `two women with the same hair`, `everyone the same height`,
+`everyone the same build`. É o erro típico com seis pessoas — o modelo replica um traço marcante
+em todo mundo e apaga a distinção.
+
+E repita a exclusividade **dentro da descrição de cada um** (`He is the only one wearing glasses`,
+`He is the only one with a full beard`), não só no negativo: o modelo lê a lista de cima para
+baixo e tende a esquecer restrições que ficaram longe.
 
 ### Revelação — O presente  ✅ pronta
 
