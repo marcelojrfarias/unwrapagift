@@ -122,9 +122,12 @@
   function screen() {
     if (idx < 0) {
       var c = GIFT.cover;
+      /* Com ilustração, o filete sai: ele existe para separar o título da
+         descrição, e a imagem já faz isso. Cinco elementos numa tela é um a
+         mais do que o desenho comporta. */
       return '<p class="eyebrow rise d1">' + c.eyebrow + '</p>' +
              '<h1 class="rise d1">' + c.title + '</h1>' +
-             '<div class="hair rise d2"></div>' +
+             (c.img ? '' : '<div class="hair rise d2"></div>') +
              '<p class="desc rise d2">' + c.desc + '</p>' +
              artSlot(c.img, 'd3') +
              padsBlock(c.cta, 'd4');

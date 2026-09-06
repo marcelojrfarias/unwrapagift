@@ -566,7 +566,8 @@ h2 {
 .is-reveal .art__mask { height: 26svh; }
 
 /* A capa carrega o título grande, então a ilustração cede um pouco. */
-.is-cover .art__mask { height: 16svh; }
+.is-cover .art__mask { height: 20svh; }
+@media (max-height: 620px) { .is-cover .art__mask { height: 16svh; } }
 
 /* a revelação respira mais fundo que as outras telas */
 .is-reveal .rise { animation-duration: 1.4s; }

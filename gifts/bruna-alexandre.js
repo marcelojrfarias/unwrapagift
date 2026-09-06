@@ -18,6 +18,7 @@ window.GIFT = {
     eyebrow: 'Um presente de casamento para',
     title:   'Bruna<br>e Alexandre',
     desc:    'De Ari, Giu, Natanzinho e Marcelo.',
+    img:     '../img/capa.png',
     cta:     'Pressionem ao mesmo tempo para desembrulhar'
   },
 

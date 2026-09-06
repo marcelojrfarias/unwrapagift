@@ -152,6 +152,19 @@ height`.
 
 ## 5. Os prompts, etapa por etapa
 
+### Capa — os noivos  ✅ pronta
+
+Considerei caixa de presente e descartei: as cinco etapas são sobre pessoas, o único objeto da
+sequência é a lava-louças da revelação, e abrir com uma caixa tiraria as pessoas das duas pontas.
+Laço e caixa também é exatamente o clichê de "presentão" que o handoff evita, e a metáfora do
+desembrulhar já está dita no botão.
+
+O que custou três tentativas, e vale para qualquer cena com roupa específica: **decote e cabelo
+precisam de parágrafo próprio, repetindo a restrição de três formas.** Num prompt longo o modelo
+dilui instruções que aparecem uma vez só. O vestido é tomara-que-caia de decote reto, sem nada
+nos braços; o cabelo dela fica inteiro atrás, sem cair no ombro; o véu em contorno, atrás, sem
+cruzar os braços.
+
 Monte cada um assim: **`[BLOCO DE ESTILO]` + `SCENE:` + `[NEGATIVO]`**
 
 ### Etapa 1 — Tempo de qualidade  ✅ pronta
