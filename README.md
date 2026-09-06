@@ -64,6 +64,14 @@ docs/
   prompts-imagens.md    como gerar as ilustrações
 ```
 
+## Prévia no WhatsApp
+
+`tools/gerar-og.py` compõe `img/og.png` a partir da ilustração da capa: papel de fundo, traço
+recolorido no verde do tema e o nome em Cormorant Garamond, a mesma fonte do site. A ilustração
+crua não serve — ela é preta sobre transparente, e transparência vira preto no WhatsApp.
+
+As meta tags ficam no `index.html` de cada presente. A prévia nunca revela o presente.
+
 ## Imagens
 
 Opcionais. Se o arquivo não existir, a tela renderiza só com o texto e o layout não abre
