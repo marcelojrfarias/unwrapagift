@@ -115,10 +115,28 @@ Use exatamente estes textos, sempre iguais, em toda cena onde a pessoa aparecer:
 | **Bruna** | `a woman with long dark wavy hair filled in as a solid black shape, falling well past her shoulders, slim build` | `IMG_4393`, `IMG_4394`, `IMG_4395` |
 | **Alexandre (Xand)** | `a tall broad-shouldered man with very short cropped hair drawn as clean outline only (no black shape on his head) and a FULL SOLID BLACK BEARD filled in as a dark shape, wearing an oversized t-shirt` | `IMG_4391`, `IMG_4396`, `IMG_4397` |
 
-> **Pendência:** a etapa 5 mostra os seis. Ainda não há fotos de **Ari, Giu, Natan e Marcelo**.
-> Coloque uma foto de cada em `bruna-e-alexandre/` e escreva um descritor no mesmo formato acima
-> antes de gerar essa imagem. Sem isso, gere a etapa 5 com os seis de costas (o prompt alternativo
-> está lá embaixo) — funciona bem e não depende de semelhança.
+### Os outros quatro
+
+Numa cena com seis pessoas o problema deixa de ser semelhança e passa a ser **distinção**: se dois
+saem parecidos, a imagem perde o sentido. A divisão abaixo dá a cada um uma silhueta própria.
+
+| Pessoa | Descritor | Marca que o separa |
+|---|---|---|
+| **Ariane** | `a short woman, the shortest of the group, with very long straight dark hair filled solid black, a straight silhouette with no waves` | cabelo liso e reto |
+| **Giu** | `a woman of average height with dark hair tied up in a bun, filled solid black — compact silhouette, no hair on her shoulders` | cabelo preso |
+| **Natan** | `a man of average height and solid build, with short dark curly hair and a short cropped beard, both drawn as outline only, no glasses` | sem óculos, barba em contorno |
+| **Marcelo** | `a tall man with voluminous dark curly hair drawn as outline, a goatee, and thick rectangular glasses drawn in outline` | óculos |
+
+Duas regras que sustentam isso:
+
+- **Só a Bruna, a Ari e a Giu têm preenchimento de cabelo**, cada uma com um formato diferente:
+  ondulado longo, liso longo, preso. Três variações de "cabelo escuro solto" não se distinguiriam.
+- **A única mancha preta masculina é a barba do Xand.** Se a barba do Natan ou os óculos do Marcelo
+  também forem preenchidos, os três homens viram o mesmo homem no tamanho real.
+
+**Alturas** (do mais alto ao mais baixo): Alexandre, Marcelo (quase igual), Natan, Giu e Bruna
+(quase iguais), Ariane (a mais baixa). Numa cena com seis, a linha das cabeças ajuda a leitura
+tanto quanto o cabelo.
 
 ---
 
@@ -188,22 +206,24 @@ mesmo dividindo.
 
 ### Etapa 5 — Os seis
 
-**Versão A** (quando houver fotos dos quatro):
-
 ```
-SCENE: Six friends gathered around a round dinner table, seen from a slightly elevated angle,
-all raising glasses together in a toast. On the table only a few plates and glasses, drawn
-sparsely. [descritores das seis pessoas, na ordem em que aparecem]. Warm, informal, everyone
-leaning slightly toward the center of the table.
+SCENE: Six friends standing shoulder to shoulder in a single row, facing the viewer, all raising
+a glass together in a toast. From left to right: [Ariane], [Giu], [Bruna], [Alexandre], [Natan],
+[Marcelo] — use os descritores das tabelas acima, na íntegra. Only the six figures and their
+raised glasses are drawn. No table, no chairs, no room, no floor line.
 ```
 
-**Versão B** (sem as fotos — use esta se o tempo apertar):
+**Sem mesa, de propósito.** A copy fala do primeiro jantar na casa nova e uma mesa posta casaria
+com isso, mas a 126px de altura seis pessoas mais uma mesa viram uma mancha. Em pé, cada figura
+fica com ~35px de largura e a silhueta do cabelo ainda lê. O brinde sozinho entrega o jantar.
 
-```
-SCENE: Six friends seen from behind, standing shoulder to shoulder in a loose row, arms over
-each other's shoulders, looking away from the viewer. Varied heights and builds. One of them
-has a closely shaved head and broad shoulders; two have long wavy hair. No faces visible.
-```
+**O casal no centro**, os quatro em volta: a etapa fala de vocês em torno deles, e a composição
+diz isso sem texto. A ordem sugerida também faz a linha das cabeças subir da esquerda para a
+direita, em vez de virar uma fileira plana.
+
+Acrescente ao negativo desta cena: `glasses on more than one man`, `beards on more than one man`,
+`identical hairstyles`, `everyone the same height`. É o erro típico com seis pessoas — o modelo
+replica um traço marcante em todo mundo e apaga a distinção.
 
 ### Revelação — O presente  ✅ pronta
 
